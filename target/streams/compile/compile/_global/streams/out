@@ -1,6 +1,6 @@
-[0m[[0m[31merror[0m] [0m[0m[31m-- [E006] Not Found Error: C:\Users\Jason.Bullock\Documents\Git\advent-of-code\src\main\scala\AOC2021\AOC5.scala:6:12 [0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m6 |[0m[33mval[0m [36minput[0m = Source[0m
-[0m[[0m[31merror[0m] [0m[0m  |            [31m^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m  |            Not found: Source[0m
+[0m[[0m[31merror[0m] [0m[0m[31m-- [E086] Syntax Error: /home/jason/git/AdventOfCode/src/main/scala/com/jbullock/aoc2021/day5/Day5.scala:25:32 [0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m25 |[0m    [33mval[0m [36mfiltered[0m = input.filter(_.isHorizontal || _.isVertical)[0m
+[0m[[0m[31merror[0m] [0m[0m   |                                [31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m   |                                Wrong number of parameters, expected: 1[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

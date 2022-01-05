@@ -1,4 +1,4 @@
-[0m[[0m[0mdebug[0m] [0m[0m[advent-of-code-build] Classpath dependencies List()[0m
-[0m[[0m[0mdebug[0m] [0m[0m[advent-of-code-build] Dependencies from configurations List()[0m
-[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'advent-of-code-build' to 'C:\Users\Jason.Bullock\Documents\Git\advent-of-code\project\.bloop\advent-of-code-build.json'[0m
-[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop\advent-of-code-build.json[0m
+[0m[[0m[0mdebug[0m] [0m[0m[adventofcode-build] Classpath dependencies List()[0m
+[0m[[0m[0mdebug[0m] [0m[0m[adventofcode-build] Dependencies from configurations List()[0m
+[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'adventofcode-build' to '/home/jason/git/AdventOfCode/project/.bloop/adventofcode-build.json'[0m
+[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop/adventofcode-build.json[0m
