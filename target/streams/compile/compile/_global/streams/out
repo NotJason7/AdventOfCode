@@ -1,7 +1,14 @@
-[0m[[0m[31merror[0m] [0m[0m[31m-- [E007] Type Mismatch Error: /home/jason/git/AdventOfCode/src/main/scala/com/jbullock/aoc2021/day7/Day7.scala:26:42 [0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m26 |[0m    [33mval[0m [36mminFuel[0m = fuelUsage.minBy(_._2)._2[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                          [31m^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                          Found:    Unit[0m
-[0m[[0m[31merror[0m] [0m[0m   |                                          Required: Int[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m-- [E040] Syntax Error: /home/jason/git/AdventOfCode/src/main/scala/com/jbullock/aoc2021/day8/Day8.scala:92:17 [0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m92 |[0m    decodedInput..sum[0m
+[0m[[0m[31merror[0m] [0m[0m   |                 [31m^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m   |                 an identifier expected, but '.' found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m-- [E040] Syntax Error: /home/jason/git/AdventOfCode/src/main/scala/com/jbullock/aoc2021/day8/Day8.scala:153:0 [0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m153 |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m    |[31m^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m    |unindent expected, but eof found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m-- [E006] Not Found Error: /home/jason/git/AdventOfCode/src/main/scala/com/jbullock/aoc2021/day8/Day8.scala:85:20 [0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m85 |[0m      [33mval[0m [36mdecoder[0m = decodeMap(scrambledDisplay.cipher)[0m
+[0m[[0m[31merror[0m] [0m[0m   |                    [31m^^^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m   |                    Not found: decodeMap[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
