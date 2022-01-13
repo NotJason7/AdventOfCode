@@ -65,7 +65,7 @@ def runDay8(): Unit =
   println(s"Part one: ${Day8.part1()}")
   println(s"Part two: ${Day8.part2()}")
 
-object Day8 {
+object Day8:
   val input = Source
     .fromResource("2021/Day8Input.txt")
     .getLines
@@ -142,5 +142,3 @@ object Day8 {
       eight -> 8,
       nine -> 9
     )
-
-}
