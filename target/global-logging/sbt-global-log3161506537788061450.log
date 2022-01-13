@@ -1,6 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(runMain com.jbullock.aoc2021.day5.runDay5, Some(1410e784-0969-4a50-bafe-6e167821bcd6), Some(CommandSource(console0)))[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / runMain[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: bloop.integrations.sbt.Offloader$$anon$1@37c1e2a4, check cycles: false, forcegc: true[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /home/jason/git/AdventOfCode/target/scala-3.0.1/classes ...[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 0 s, completed Jan 5, 2022, 5:46:44 PM[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
