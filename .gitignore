@@ -1,4 +1,20 @@
-.bsp
-.bloop
-.metals
-.vscode
+target/
+.bsp/
+
+# IDE stuff
+.bloop/
+.metals/
+.vscode/
+project/.bloop/
+project/metals.sbt
+project/project/
+.idea
+.ammonite/
+
+# Terraform files
+**/.terraform
+**/.terraform.lock.hcl
+
+# Secrets
+secrets/
+.envrc
