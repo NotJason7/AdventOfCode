@@ -3,8 +3,7 @@ package com.jbullock.aoc2021.day7
 import scala.io.Source
 
 @main
-def runDay7(): Unit =
-  // Day7.part1()
+def runDay7(): Unit = 
   println(s"Part one: ${Day7.part1()}")
   println(s"Part two: ${Day7.part2()}")
 
