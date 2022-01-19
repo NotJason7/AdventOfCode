@@ -8,6 +8,8 @@ target/
 project/.bloop/
 project/metals.sbt
 project/project/
+project/target/
+project/
 .idea
 .ammonite/
 
