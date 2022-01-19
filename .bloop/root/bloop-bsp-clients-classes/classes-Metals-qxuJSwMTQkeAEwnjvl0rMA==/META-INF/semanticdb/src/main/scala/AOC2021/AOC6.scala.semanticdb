@@ -1,200 +1,0 @@
-
-±8!src/main/scala/AOC2021/AOC6.scala*'
-AOC2021/AOC6$package. *AOC2021€*,
-AOC2021/AOC6$package.input. €*input€*/
-AOC2021/AOC6$package.project().*project€*8
-(AOC2021/AOC6$package.project().(current)*current€*)
-AOC2021/AOC6$package.loop().*loop€*=
-)AOC2021/AOC6$package.loop().(demographic)*demographic€*=
-)AOC2021/AOC6$package.loop().(ageFunction)*ageFunction€*1
-#AOC2021/AOC6$package.loop().(steps)*steps€*5
-"AOC2021/AOC6$package.population().*
-population€*C
-/AOC2021/AOC6$package.population().(demographic)*demographic€*
-local0*x$1€*
-local1*x$2€*
-local2 €*a€*
-local3 €*k€*
-local4 €*v€*)
-AOC2021/AOC6$package.AOC6().*AOC6€*
-local5 €*demographic€*
-local6*x€*
-local7*x$1€*
-local8*k€*
-local9*v€*!
-local10 €*populationSize€*
-local11*current€*
-AOC2021/AOC6# *AOC6€**
-AOC2021/AOC6#`<init>`(). €@*<init>€*$
-AOC2021/AOC6#main(). € *main€*'
-AOC2021/AOC6#main().(args)*args€*
-local12 €*error€2
- AOC2021/2
- scala/io/Source.2
- scala/io/Source#2
- 	scala/io/2
- scala/2'
- scala/annotation/tailrec#2
- scala/annotation/2
- scala/2
-AOC2021/AOC6$package.2)
- 	AOC2021/AOC6$package.input.2.
-  scala/collection/ArrayOps#map().2)
- scala/Predef.refArrayOps().21
- 	#scala/collection/ArrayOps#filter().2)
- java/lang/String#split(+1).2<
-
-
- .scala/collection/IterableOnceOps#mkString(+2).21
-		 #scala/io/BufferedSource#getLines().2)
- scala/io/Source.fromFile().2
- scala/io/Source.2E
- 7scala/io/LowPriorityCodecImplicits#fallbackSystemCodec.2(
- scala/Boolean#`unary_!`().2)
- java/lang/String#isEmpty().21
-	 #scala/collection/StringOps#toInt().2+
- scala/Predef.augmentString().2-
- scala/reflect/ClassTag.apply().2-
- AOC2021/AOC6$package.project().26
- (AOC2021/AOC6$package.project().(current)2
- scala/Predef.Map#2
- 
-scala/Int#2
- "scala/Long#2
-& )scala/Predef.Map#2
-* -
-scala/Int#2
-/ 3scala/Long#22
- $scala/collection/MapFactory#apply().2
- scala/Predef.Map.2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().2!
-# $scala/Long#`+`(+5).22
- $scala/collection/MapOps#getOrElse().26
-
- (AOC2021/AOC6$package.project().(current)22
-- 6$scala/collection/MapOps#getOrElse().26
-% ,(AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2-
- scala/Predef.ArrowAssoc#`->`().2(
- scala/Predef.ArrowAssoc().22
- $scala/collection/MapOps#getOrElse().26
-	 (AOC2021/AOC6$package.project().(current)2'
- scala/annotation/tailrec#2*
- AOC2021/AOC6$package.loop().27
- )AOC2021/AOC6$package.loop().(demographic)2
- scala/Predef.Map#2
- 
-scala/Int#2
- scala/Long#27
- )AOC2021/AOC6$package.loop().(ageFunction)2
- scala/Predef.Map#2
- 
-scala/Int#2
- scala/Long#2
-# &scala/Predef.Map#2
-' *
-scala/Int#2
-, 0scala/Long#21
-   	#AOC2021/AOC6$package.loop().(steps)2
-   
-scala/Int#2
-!! scala/Predef.Map#2
-!! 
-
-scala/Int#2
-!! scala/Long#2!
-"" scala/Int#`==`(+3).21
-"" 
-#AOC2021/AOC6$package.loop().(steps)27
-""  )AOC2021/AOC6$package.loop().(demographic)2*
-## AOC2021/AOC6$package.loop().2&
-## scala/Function1#apply().27
-## )AOC2021/AOC6$package.loop().(ageFunction)27
-## #)AOC2021/AOC6$package.loop().(demographic)27
-#&# 1)AOC2021/AOC6$package.loop().(ageFunction)2 
-#9# :scala/Int#`-`(+3).21
-#3# 8#AOC2021/AOC6$package.loop().(steps)20
-%% "AOC2021/AOC6$package.population().2=
-%% /AOC2021/AOC6$package.population().(demographic)2
-%% scala/Predef.Map#2
-% % #
-scala/Int#2
-%%% )scala/Long#2
-%-% 1scala/Long#2:
-&& ,scala/collection/IterableOnceOps#foldLeft().2=
-&& /AOC2021/AOC6$package.population().(demographic)2#
-&& scala/Tuple2.apply().2
-&& local02
-&& local12%
-&#& #scala/Tuple2.unapply().2
-&#& $local22%
-&'& 'scala/Tuple2.unapply().2
-&'& (local32
-&*& +local42!
-&3& 4scala/Long#`+`(+5).2
-&1& 2local22
-&5& 6local42
-(( scala/main#2*
-)) AOC2021/AOC6$package.AOC6().2
-,, local52,
--- scala/collection/MapOps#map().22
--
-- $scala/collection/ArrayOps#groupBy().2)
--- scala/Predef.intArrayOps().2)
--- 	AOC2021/AOC6$package.input.2&
--- scala/Predef.identity().2
--- local62
--!- "local82
--!- !scala/Tuple2#_1.2
--$- %local92
--$- $scala/Tuple2#_2.2#
--+- +scala/Tuple2.apply().2
--+- ,local82!
--7- =scala/Int#toLong().2#
--0- 6scala/Array#length().2
--.- /local92'
-.. 	scala/Predef.println(+1).2
-.
-. local52
-// local1020
-// !"AOC2021/AOC6$package.population().2*
-/"/ &AOC2021/AOC6$package.loop().2
-/'/ 2local52-
-/4/ ;AOC2021/AOC6$package.project().2
-/4/ 4local112'
-00 	scala/Predef.println(+1).2
-0
-0 local102
-((AOC2021/AOC6#2"
-((AOC2021/AOC6#`<init>`().2&
-((AOC2021/AOC6$package.AOC6().23
-(()scala/util/CommandLineParser.showError().2
-((local12PZ A522A77BB4356BCCF36FAD18C8CB07D4
