@@ -83,7 +83,7 @@ object Day9:
       .map(_.length)
       .sortWith(_ > _)
       .take(3)
-      .foldLeft(1)(_ * _)
+      .product
     println(s"Part two: $basinSizeProduct")
 
 
