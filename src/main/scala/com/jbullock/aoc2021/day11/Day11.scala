@@ -83,7 +83,7 @@ object Day11:
           val flashedGrid = flashed.foldLeft(grid)(_ + _)
           val energyGain = flashed.keys.toList
             .flatMap(_.adjacent)
-            .filter( p => xRange.contains(p.x) && yRange.contains(p.y) && !flashedGrid(p).hasFlashed)
+            .filter( p => flashedGrid.keys.toList.contains(p) && !flashedGrid(p).hasFlashed)
             .groupBy(identity)
             .map((p, v) => p -> Octopus(flashedGrid(p).energy + v.size, false, flashedGrid(p).totalFlashes))
           val nextGrid = energyGain.foldLeft(flashedGrid)(_ + _)
