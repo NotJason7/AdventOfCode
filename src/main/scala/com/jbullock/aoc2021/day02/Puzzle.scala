@@ -5,7 +5,7 @@ import scala.io.Source
 @main
 def solvePuzzle: Unit =
   Puzzle.part1
-//  Puzzle.part2
+  Puzzle.part2
 
 case class Instruction(direction: String, magnitude: Int)
 
@@ -36,6 +36,24 @@ object Puzzle {
     }
     val answer = totalMovement._1 * totalMovement._2
     println(s"Part 1: $answer")
+
+  def part2: Unit =
+    val totalMovement = input.foldLeft((0, 0, 0)){
+      case ((aim: Int, x: Int, y: Int), i) => i.direction match
+        case "forward" => (aim, x+i.magnitude, aim*i.magnitude + y)
+        case "up"      => (aim - i.magnitude, x, y)
+        case "down"    => (aim + i.magnitude, x, y)
+    }
+    val answer = totalMovement._2 * totalMovement._3
+    println(s"Part 2: $answer")
+
+
+  //  down X increases your aim by X units.
+  //  up X decreases your aim by X units.
+  //  forward X does two things:
+  //  It increases your horizontal position by X units.
+  //  It increases your depth by your aim multiplied by X.
+
 
 
 }
