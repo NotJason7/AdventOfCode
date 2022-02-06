@@ -9,6 +9,7 @@ def runDay11(): Unit =
   Day11.part2()
 
 case class Position(x: Int, y: Int)
+
 extension (p: Position) {
   def adjacent: List[Position] =
     val adjacentPositions = List(
@@ -23,7 +24,9 @@ extension (p: Position) {
     )
     adjacentPositions.map((xx, yy) => Position(p.x + xx, p.y + yy))
 }
+
 case class Octopus(energy: Int, hasFlashed: Boolean, totalFlashes: Int)
+
 extension (o: Octopus) {
   def increment: Octopus =
     Octopus(o.energy + 1, false, o.totalFlashes)
@@ -32,8 +35,6 @@ extension (o: Octopus) {
   def canFlash: Boolean =
     o.energy > 9 && !o.hasFlashed
 }
-
-//case class Map[Position, Octopus](grid: Map[Position, Octopus])
 
 object Day11:
   val input: List[List[Int]] = Source
@@ -65,7 +66,6 @@ object Day11:
   def findFirstSyncFlash(stepCount: Int, grid: Map[Position, Octopus]): Int =
     if grid.filter((_, octopus) => octopus.hasFlashed).size == grid.keys.size then stepCount
     else findFirstSyncFlash(stepCount + 1, timeSteps(1, grid))
-
 
   @tailrec
   def timeSteps(steps: Int, grid: Map[Position, Octopus]): Map[Position, Octopus] =
