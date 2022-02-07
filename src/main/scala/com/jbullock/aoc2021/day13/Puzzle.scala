@@ -3,8 +3,9 @@ package com.jbullock.aoc2021.day13
 import scala.io.Source
 
 def solvePuzzle(): Unit =
-  Puzzle.part1()
-  Puzzle.part2()
+  println("lol")
+//  Puzzle.part1()
+//  Puzzle.part2()
 
 object Puzzle {
 
