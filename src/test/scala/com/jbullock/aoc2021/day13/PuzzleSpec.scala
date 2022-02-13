@@ -17,10 +17,6 @@ class PuzzleSpec extends AnyFlatSpec with Matchers {
     answer mustBe expected
   }
 
-  "Part2" must "give correct answer for example" ignore {
-    ???
-  }
-
   "Dot" must "fold left correctly" in {
     val dotRange = (0 to 10).toList
     val foldLine = 5

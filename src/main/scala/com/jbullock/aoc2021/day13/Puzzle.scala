@@ -2,7 +2,12 @@ package com.jbullock.aoc2021.day13
 
 import com.jbullock.aoc2021.day12.Puzzle
 
-import breeze.plot._
+import doodle.image._
+import doodle.image.syntax.all._
+import doodle.core._
+import doodle.java2d._
+import doodle.effect.Writer._
+import cats.effect.unsafe.implicits.global
 
 import scala.annotation.tailrec
 import scala.io.Source
@@ -41,6 +46,12 @@ extension(p: Paper){
     Paper(p.dots.flatMap(_.up(y)))
   def left(x: Int): Paper =
     Paper(p.dots.flatMap(_.left(x)))
+  def draw(name: String): Unit =
+    val point = Image.rectangle(10,10).fillColor(Color.black)
+    val saveLocation = "src/main/scala/com/jbullock/aoc2021/day13/"
+    val paperDiagram = p.dots.map(d => point.at(10*d.x, -10*d.y)).reduce(_.on(_))
+    paperDiagram.write[Png](s"$saveLocation$name.png")
+
 }
 
 sealed trait Instruction
@@ -60,17 +71,21 @@ object Puzzle:
     val coordinates = input.filterNot(_.startsWith("fold")).filterNot(_.isEmpty)
     val instructions = parseInstructions(input.filter(_.startsWith("fold")))
     val paper = parseCoordinates(coordinates)
+    paper.draw("Start")
     val folded = loop(paper, instructions)
-    val finalDots = folded.dots.toList
-    val xs = finalDots.map(d => d.x)
-    val ys = finalDots.map(d => -d.y)
-
-    val f = Figure()
-    val p = f.subplot(0)
-    p += plot(xs, ys, '+')
-    p.title = "AOC2021 - Day 13"
-    f.saveas("src/main/scala/com/jbullock/aoc2021/day13/Part2.png")
+    folded.draw("End")
+//    val finalDots = folded.dots.toList
+//    val xs = finalDots.map(d => d.x)
+//    val ys = finalDots.map(d => -d.y)
+//    val f = Figure()
+//    val p = f.subplot(0)
+//    p += plot(xs, ys, '.')
+//    p.title = "AOC2021 - Day 13"
+//    f.saveas("src/main/scala/com/jbullock/aoc2021/day13/Part2.png")
     ()
+
+
+
 
   def foldPaper(paper: Paper, instruction: Instruction): Paper = instruction match
     case Up(y) => paper.up(y)
@@ -78,10 +93,12 @@ object Puzzle:
 
   @tailrec
   def loop(paper: Paper, instructions: List[Instruction]): Paper =
+    val dotCount = paper.dots.size
+    if dotCount < 291 then
+      paper.draw(s"Paper-${paper.dots.size}")
     if instructions.isEmpty then paper
     else
       loop(foldPaper(paper, instructions.head), instructions.tail)
-
 
   def parseCoordinates(input: List[String]): Paper =
     Paper(input

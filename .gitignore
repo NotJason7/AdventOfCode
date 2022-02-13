@@ -12,6 +12,7 @@ project/target/
 project/
 .idea
 .ammonite/
+.DS_Store
 
 # Terraform files
 **/.terraform
@@ -20,3 +21,7 @@ project/
 # Secrets
 secrets/
 .envrc
+
+# Random files
+*.kra
+
