@@ -16,18 +16,18 @@ def solvePuzzle(): Unit =
 
 case class Node(name: String)
 
-extension (n: Node) {
+extension (n: Node)
   def isBig: Boolean =
     n.name == n.name.capitalize
   def isStart: Boolean =
     n.name == "start"
   def isEnd: Boolean =
     n.name == "end"
-}
+
 
 case class Route(path: List[Node])
 
-extension (r: Route) {
+extension (r: Route)
   def extend(n: Node): Route =
     Route(n :: r.path)
   def duplicateCount: Int =
@@ -37,7 +37,7 @@ extension (r: Route) {
   def canExtendSmall(n: Node): Boolean =
     val extended = r.extend(n)
     extended.duplicateCount <= 1 && extended.nodeCount(n) <= 2
-}
+
 
 object Puzzle:
 
