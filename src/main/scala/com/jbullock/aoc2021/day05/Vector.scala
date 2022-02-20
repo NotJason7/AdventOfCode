@@ -1,4 +1,4 @@
-package com.jbullock.aoc2021.day5
+package com.jbullock.aoc2021.day05
 
 case class Vector(from: Coordinate, to: Coordinate) {
   val isVertical: Boolean = from.x == to.x

@@ -1,4 +1,4 @@
-package com.jbullock.aoc2021.day5
+package com.jbullock.aoc2021.day05
 
 import scala.io.Source
 
@@ -9,7 +9,7 @@ def runDay5(): Unit =
 
 object Day5 {
   val input: List[Vector] = Source
-    .fromResource("2021/Day5Input.txt")
+    .fromResource("2021/Day05/Day5Input.txt")
     .getLines
     .toList
     .map(_.replace(" -> ", ","))

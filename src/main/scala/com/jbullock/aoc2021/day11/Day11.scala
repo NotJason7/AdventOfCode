@@ -38,7 +38,7 @@ extension (o: Octopus) {
 
 object Day11:
   val input: List[List[Int]] = Source
-    .fromResource("2021/Day11Input.txt")
+    .fromResource("2021/Day11/Day11Input.txt")
     .getLines
     .toList
     .map(_.toList.map(_.asDigit))

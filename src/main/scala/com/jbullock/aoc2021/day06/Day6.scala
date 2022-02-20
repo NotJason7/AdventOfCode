@@ -1,4 +1,4 @@
-package com.jbullock.aoc2021.day6
+package com.jbullock.aoc2021.day06
 
 import scala.io.Source
 import scala.annotation.tailrec
@@ -11,7 +11,7 @@ def runDay6(): Unit =
  
 object Day6 {
   val input = Source
-    .fromResource("2021/Day6Input.txt")
+    .fromResource("2021/Day06/Day6Input.txt")
     .getLines
     .mkString
     .split(",")
