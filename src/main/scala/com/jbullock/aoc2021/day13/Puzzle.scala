@@ -74,15 +74,6 @@ object Puzzle:
     paper.draw("Start")
     val folded = loop(paper, instructions)
     folded.draw("End")
-//    val finalDots = folded.dots.toList
-//    val xs = finalDots.map(d => d.x)
-//    val ys = finalDots.map(d => -d.y)
-//    val f = Figure()
-//    val p = f.subplot(0)
-//    p += plot(xs, ys, '.')
-//    p.title = "AOC2021 - Day 13"
-//    f.saveas("src/main/scala/com/jbullock/aoc2021/day13/Part2.png")
-    ()
 
 
 
@@ -93,9 +84,6 @@ object Puzzle:
 
   @tailrec
   def loop(paper: Paper, instructions: List[Instruction]): Paper =
-    val dotCount = paper.dots.size
-    if dotCount < 291 then
-      paper.draw(s"Paper-${paper.dots.size}")
     if instructions.isEmpty then paper
     else
       loop(foldPaper(paper, instructions.head), instructions.tail)
