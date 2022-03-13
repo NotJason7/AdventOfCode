@@ -8,11 +8,11 @@ import scala.collection.mutable.PriorityQueue
 @main
 def solvePuzzle(): Unit =
   val input: List[String] = Source
-    .fromResource("2021/Day15/Example.txt")
+    .fromResource("aoc/2021/Day15/Input.txt")
     .getLines
     .toList
-//  val part1Answer = Puzzle.part1(input)
-//  println(s"Part1: $part1Answer")
+  val part1Answer = Puzzle.part1(input)
+  println(s"Part1: $part1Answer")
   val part2Answer = Puzzle.part2(input)
   println(s"Part2: $part2Answer")
 
@@ -63,21 +63,31 @@ extension(p: Path)
   def extend(n: Node): Path =
     Path(p.nodes.prepended(n))
   def write(): Unit =
-    println(p.nodes.reverse.map(n => s"(${n.point.x},${n.point.y}): ${n.risk}").mkString("\n"))
+    println(p.nodes.map(n => s"(${n.point.x},${n.point.y}): ${n.risk}").mkString("\n"))
 
 
 
-case class Cavern(points: Map[Point, Int])
+case class Cavern(points: Map[Point, Int], width: Int, height: Int)
+extension(c: Cavern)
+  def write(): Unit =
+    val w = (0 to c.width).toList
+    val h = (0 to c.height).toList
+    val grid = h.map{ y =>
+      w.map(x => Point(x, y))
+    }.map(_.map(c.points(_)).mkString).mkString("\n")
+    print(grid)
 object Cavern:
   def fromList(l: List[String]): Cavern =
     val yRange = l.indices
+    val width = l.head.length
     val xRange = l.head.indices
+    val height = l.size
     val positions = l.map(_.toList.map(_.asDigit))
     val cavern = for {
       y <- l.indices
       x <- l.head.indices
     } yield Map(Point(x, y) -> positions(y)(x))
-    Cavern(cavern.flatten.toMap)
+    Cavern(cavern.flatten.toMap, height - 1, width - 1)
   def fromListBigVersion(l: List[String]): Cavern =
     val yRange = l.indices
     val width = l.head.length
@@ -89,8 +99,13 @@ object Cavern:
       x <- l.head.indices
       yFactor <- (0 to 4).toList
       y <- l.indices
-    } yield Map(Point(x + (xFactor * width), y + (yFactor * height)) -> (positions(y)(x) + (xFactor + yFactor)))
-    Cavern(cavern.flatten.toMap)
+    } yield {
+      val key = Point(x + (xFactor * width), y + (yFactor * height))
+      val value = positions(y)(x) + (xFactor + yFactor)
+      val trueValue = if value > 9 then value - 9 else value
+      Map(key -> trueValue)
+    }
+    Cavern(cavern.flatten.toMap, height * 5 - 1, width * 5 - 1)
 
 
 
@@ -128,27 +143,19 @@ object Puzzle:
 
   def part1(input: List[String]): Int =
     given cavern: Cavern = Cavern.fromList(input)
-    given target: Point = Point(input.head.length-1, input.size-1)
+    given target: Point = Point(cavern.width, cavern.height)
     val start = Point(0, 0)
     val path = aStar(start)
-    path.write()
-    val risk = path.nodes.head.risk
+    val risk = path.nodes.last.risk
     risk
 
   def part2(input: List[String]): Int =
     given cavern: Cavern = Cavern.fromListBigVersion(input)
-    val points = for {
-      x <- (0 to 49).toList
-      y <- (0 to 49).toList
-    } yield Point(x, y)
-    println(points.map(cavern.points(_)).mkString)
-    1
-//    given target: Point = Point(input.head.length*5-1, input.size*5-1)
-//    val start = Point(0, 0)
-//    val path = aStar(start)
-//    path.write()
-//    val risk = path.nodes.head.risk
-//    risk
+    given target: Point = Point(cavern.width, cavern.height)
+    val start = Point(0, 0)
+    val path = aStar(start)
+    val risk = path.nodes.last.risk
+    risk
 
 
 

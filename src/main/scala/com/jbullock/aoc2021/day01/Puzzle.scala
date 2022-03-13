@@ -9,7 +9,7 @@ def solvePuzzle: Unit =
 
 object Puzzle {
   val input: List[Int] = Source
-    .fromResource("2021/Day01/Input.txt")
+    .fromResource("aoc/2021/Day01/Input.txt")
     .getLines
     .toList
     .map(_.toInt)

@@ -15,7 +15,7 @@ import scala.io.Source
 @main
 def solvePuzzle(): Unit =
   val input: List[String] = Source
-    .fromResource("2021/Day13/Input.txt")
+    .fromResource("aoc/2021/Day13/Input.txt")
     .getLines
     .toList
   val part1Answer = Puzzle.part1(input)

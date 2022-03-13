@@ -9,7 +9,7 @@ def runDay5(): Unit =
 
 object Day5 {
   val input: List[Vector] = Source
-    .fromResource("2021/Day05/Day5Input.txt")
+    .fromResource("aoc/2021/Day05/Day5Input.txt")
     .getLines
     .toList
     .map(_.replace(" -> ", ","))

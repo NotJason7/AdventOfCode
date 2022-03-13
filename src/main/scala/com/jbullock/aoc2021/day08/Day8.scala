@@ -67,7 +67,7 @@ def runDay8(): Unit =
 
 object Day8:
   val input = Source
-    .fromResource("2021/Day08/Day8Input.txt")
+    .fromResource("aoc/2021/Day08/Day8Input.txt")
     .getLines
     .toList
     .map(_.replace(" | ", ","))

@@ -11,7 +11,7 @@ def runDay6(): Unit =
  
 object Day6 {
   val input = Source
-    .fromResource("2021/Day06/Day6Input.txt")
+    .fromResource("aoc/2021/Day06/Day6Input.txt")
     .getLines
     .mkString
     .split(",")

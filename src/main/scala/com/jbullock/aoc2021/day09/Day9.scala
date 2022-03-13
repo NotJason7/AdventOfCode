@@ -57,7 +57,7 @@ case class Position(x: Int, y: Int):
 
 object Day9:
   val input = Source
-    .fromResource("2021/Day09/Day9Input.txt")
+    .fromResource("aoc/2021/Day09/Day9Input.txt")
     .getLines
     .toVector
     .map(_.toVector.map(_.toString.toInt))

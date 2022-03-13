@@ -21,7 +21,7 @@ extension (i: Instruction) {
 
 object Puzzle {
   val input = Source
-    .fromResource("2021/Day02/Input.txt")
+    .fromResource("aoc/2021/Day02/Input.txt")
     .getLines
     .toList
     .map {

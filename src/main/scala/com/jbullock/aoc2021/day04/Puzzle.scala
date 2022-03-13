@@ -40,7 +40,7 @@ extension(b: Board) {
 
 object Puzzle {
   val input: List[String] = Source
-    .fromResource("2021/Day04/Input.txt")
+    .fromResource("aoc/2021/Day04/Input.txt")
     .getLines
     .toList
   val drawOrder: Seq[Int] = input.head.split(',').map(_.toInt)
