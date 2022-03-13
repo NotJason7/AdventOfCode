@@ -7,15 +7,15 @@ import scala.io.Source
 
 class PuzzleSpec extends AnyFlatSpec with Matchers {
   val exampleInput1: List[String] = Source
-    .fromResource("2021/Day12/Example01.txt")
+    .fromResource("aoc/2021/Day12/Example01.txt")
     .getLines
     .toList
   val exampleInput2: List[String] = Source
-    .fromResource("2021/Day12/Example02.txt")
+    .fromResource("aoc/2021/Day12/Example02.txt")
     .getLines
     .toList
   val exampleInput3: List[String] = Source
-    .fromResource("2021/Day12/Example03.txt")
+    .fromResource("aoc/2021/Day12/Example03.txt")
     .getLines
     .toList
 

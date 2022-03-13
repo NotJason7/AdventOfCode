@@ -7,7 +7,7 @@ import scala.language.postfixOps
 @main
 def solvePuzzle(): Unit =
   val input: List[String] = Source
-    .fromResource("2021/Day14/Input.txt")
+    .fromResource("aoc/2021/Day14/Input.txt")
     .getLines
     .toList
   val part1Answer = Puzzle.part1(input)

@@ -1,4 +1,4 @@
-package com.jbullock.aoc2021.day9
+package com.jbullock.aoc2021.day09
 
 import scala.annotation.tailrec
 import scala.io.Source
@@ -57,7 +57,7 @@ case class Position(x: Int, y: Int):
 
 object Day9:
   val input = Source
-    .fromResource("2021/Day9Input.txt")
+    .fromResource("aoc/2021/Day09/Day9Input.txt")
     .getLines
     .toVector
     .map(_.toVector.map(_.toString.toInt))

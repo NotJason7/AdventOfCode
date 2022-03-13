@@ -1,4 +1,4 @@
-package com.jbullock.aoc2021.day8
+package com.jbullock.aoc2021.day08
 
 import scala.io.Source
 
@@ -67,7 +67,7 @@ def runDay8(): Unit =
 
 object Day8:
   val input = Source
-    .fromResource("2021/Day8Input.txt")
+    .fromResource("aoc/2021/Day08/Day8Input.txt")
     .getLines
     .toList
     .map(_.replace(" | ", ","))

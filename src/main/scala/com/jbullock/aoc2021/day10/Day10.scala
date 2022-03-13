@@ -11,7 +11,7 @@ def runDay10(): Unit =
 
 object Day10:
   val input = Source
-    .fromResource("2021/Day10Input.txt")
+    .fromResource("aoc/2021/Day10/Day10Input.txt")
     .getLines
     .toList
     .map(_.toList)
