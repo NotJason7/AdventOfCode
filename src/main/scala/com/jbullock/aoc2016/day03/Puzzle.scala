@@ -38,16 +38,13 @@ object Puzzle:
 
   def part1(input: List[String]): Int =
     val triangles = input.map(_.toTriangleNumbers).map(Triangle.fromList)
-    val validTriangles = triangles.filter(_.isValidTriangle)
-    validTriangles.size
+    triangles.count(_.isValidTriangle)
 
   def part2(input: List[String]): Int =
-    val triangles = input
-      .map(_.toTriangleNumbers)
+    val triangles = input.map(_.toTriangleNumbers)
       .transpose
       .flatten
       .sliding(3,3)
       .toList
       .map(Triangle.fromList)
-    val validTriangles = triangles.filter(_.isValidTriangle)
-    validTriangles.size
+    triangles.count(_.isValidTriangle)
