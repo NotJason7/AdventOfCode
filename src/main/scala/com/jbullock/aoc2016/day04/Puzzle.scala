@@ -29,14 +29,11 @@ object Room:
     val checkSum = s.takeRight(6).take(5)
     Room(cipherText, roomNumber, checkSum)
 extension(r: Room)
-  def constructCheckSum: String = r.cipherText
-      .filterNot(_ == '-').groupMapReduce(identity)(_ => 1)(_ + _)
-      .toVector.sortBy{case (char, frequency) => (-frequency, char)}
-      .take(5).map(_._1).mkString
-  def isValidRoom: Boolean =
-    r.constructCheckSum == r.checkSum
-  def decryptName: String =
-    r.cipherText.map{ case char: Char => char match
-      case '-' => ' '
-      case _ => char.caeserShiftLowerCase(r.roomNumber)
-    }
+  def constructCheckSum: String = r.cipherText.filterNot(_ == '-')
+    .groupMapReduce(identity)(_ => 1)(_ + _)
+    .toVector.sortBy{case (char, frequency) => (-frequency, char)}
+    .take(5).map(_._1).mkString
+  def isValidRoom: Boolean = r.constructCheckSum == r.checkSum
+  def decryptName: String = r.cipherText.map(char => char match
+    case '-' => ' '
+    case _ => char.caeserShiftLowerCase(r.roomNumber))
