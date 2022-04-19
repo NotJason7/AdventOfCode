@@ -1,15 +1,12 @@
 package com.jbullock.aoc2016.Day06
 
-import scala.annotation.tailrec
 import scala.io.Source
 
 @main
 def solvePuzzle(): Unit =
   val input: Vector[String] = Source.fromResource("aoc/2016/Day06/Input.txt").getLines.toVector
-  val part1Answer = Puzzle.part1(input)
-  println(s"Part1: $part1Answer")
-  val part2Answer = Puzzle.part2(input)
-  println(s"Part2: $part2Answer")
+  println(s"Part1: ${Puzzle.part1(input)}")
+  println(s"Part2: ${Puzzle.part2(input)}")
 
 object Puzzle:
   def part1(input: Vector[String]): String = input
