@@ -16,7 +16,6 @@ extension(s: String)
   def containsABBA: Boolean =
     if s.length <= 3 then false
     else s.sliding(4).toVector.exists(v => v(0) == v(3) && v(1) == v(2) && v(0) != v(1))
-    ``
   def findAllABAPatterns: Vector[(String, String)] =
     if s.length <= 2 then Vector.empty[(String, String)]
     else s.sliding(3).toVector
