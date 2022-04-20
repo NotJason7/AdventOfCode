@@ -51,6 +51,7 @@ object Header:
 case class Packet(header: Header, value: Int | List[Packet])
 object Packet:
   def fromHexString(s: String): Packet =
+    println(s"Hex: $s becomes binary: ${s.map(hexToBinaryString)}")
     fromBinaryString(s.toList.map(hexToBinaryString).mkString)
   def fromBinaryString(packet: String): Packet =
     val header = Header.fromHeaderString(packet.take(6))
@@ -73,8 +74,8 @@ object Packet:
   def subPacketsFromLength(s: String): List[Packet] = ???
 
   def decodeLiteral(s: String): Int =
-    val bits = s.sliding(5, 5).toList
-
+    val bits = s.grouped(5).toList
+    println(s"bits: $bits")
     @tailrec
     def loop(literal: String, bits: List[String]): String =
       if bits.isEmpty then literal
@@ -100,14 +101,14 @@ object Puzzle {
   def part1(input: List[String]): String =
     val packets = input.map(Packet.fromHexString)
     println(packets)
-    "1"
-//    val test = packets.tail.head
-//    println(test)
+    val test = packets.head
+    println(test)
+    println(s"$test: version ${test.header.version}, typeId: ${test.header.typeId}")
 //    println(test.version)
 //    println(test.typeId)
 //    println(test.literal)
 //    println(test.lengthTypeId)
-//    "1"
+    "1"
 
   def part2(input: List[String]): String = ???
 }
