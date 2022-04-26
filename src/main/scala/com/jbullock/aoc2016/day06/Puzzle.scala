@@ -1,4 +1,4 @@
-package com.jbullock.aoc2016.Day06
+package com.jbullock.aoc2016.day06
 
 import scala.io.Source
 

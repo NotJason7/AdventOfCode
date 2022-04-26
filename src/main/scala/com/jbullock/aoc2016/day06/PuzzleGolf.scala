@@ -1,4 +1,4 @@
-package com.jbullock.aoc2016.Day06
+package com.jbullock.aoc2016.day06
 import scala.io.Source
 @main def solvePuzzleGolf(): Unit =
   val input = Source.fromResource("aoc/2016/Day06/Input.txt").getLines.toVector

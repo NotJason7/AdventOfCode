@@ -51,7 +51,6 @@ extension(p: Paper){
     val saveLocation = "src/main/scala/com/jbullock/aoc2021/day13/"
     val paperDiagram = p.dots.map(d => point.at(10*d.x, -10*d.y)).reduce(_.on(_))
     paperDiagram.write[Png](s"$saveLocation$name.png")
-
 }
 
 sealed trait Instruction
