@@ -1,4 +1,4 @@
-package com.jbullock.aoc2016.Day07
+package com.jbullock.aoc2016.day07
 
 import scala.io.Source
 
@@ -9,13 +9,14 @@ def solvePuzzle(): Unit =
   println(s"Part2: ${Puzzle.part2(input)}")
 
 object Puzzle:
-  def part1(input: Vector[String]): Int = input.map(IP.apply).count(supportsTLS)
-  def part2(input: Vector[String]): Int = input.map(IP.apply).count(supportsSSL)
+  def part1(input: Vector[String]): Int = input.map(IP.apply).count(_.supportsTLS)
+  def part2(input: Vector[String]): Int = input.map(IP.apply).count(_.supportsSSL)
 
 extension(s: String)
   def containsABBA: Boolean =
     if s.length <= 3 then false
     else s.sliding(4).toVector.exists(v => v(0) == v(3) && v(1) == v(2) && v(0) != v(1))
+
   def findAllABAPatterns: Vector[(String, String)] =
     if s.length <= 2 then Vector.empty[(String, String)]
     else s.sliding(3).toVector
@@ -31,13 +32,11 @@ case class IP(address: String):
     .toVector
     .partition(_.startsWith("["))
 
-extension(ip: IP)
-  def supportsTLS: Boolean = ip.supernetSequences.exists(_.containsABBA) &&
-    !ip.hypernetSequences.exists(_.containsABBA)
+  def supportsTLS: Boolean = supernetSequences.exists(_.containsABBA) &&
+    !hypernetSequences.exists(_.containsABBA)
 
-  def supportsSSL: Boolean =
-    ip.supernetSequences
-      .map(findAllABAPatterns)
-      .filterNot(_.isEmpty)
-      .flatMap(v => v.map((a, b) => s"$b$a$b"))
-      .exists(bab => ip.hypernetSequences.exists(_.contains(bab)))
+  def supportsSSL: Boolean = supernetSequences
+    .map(findAllABAPatterns)
+    .filterNot(_.isEmpty)
+    .flatMap(v => v.map((a, b) => s"$b$a$b"))
+    .exists(bab => hypernetSequences.exists(_.contains(bab)))
