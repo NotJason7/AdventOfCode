@@ -52,9 +52,9 @@ def layerPositions(layer: Int): Vector[Position] = layer match
   case n if n < 0 => Vector.empty[Position]
   case 0 => Vector(Position(0,0))
   case l if l > 0 =>
-    val right = (1-layer to layer by 1).toVector.map(Position(layer,_))
-    val top = (layer-1 to -layer by -1).toVector.map(Position(_,layer))
-    val left = (layer-1 to -layer by -1).toVector.map(Position(-layer,_))
-    val bottom = (1-layer to layer by 1).toVector.map(Position(_,-layer))
+    val right = (1-layer to layer by 1).toVector.map(Position(layer,_)) // (1, 0), (1, 1)
+    val top = (layer-1 to -layer by -1).toVector.map(Position(_,layer)) // (0, 1), (-1, 1)
+    val left = (layer-1 to -layer by -1).toVector.map(Position(-layer,_)) // (-1, 0), (-1, -1)
+    val bottom = (1-layer to layer by 1).toVector.map(Position(_,-layer)) // (0, -1), (1, -1)
     right ++ top ++ left ++ bottom
 
