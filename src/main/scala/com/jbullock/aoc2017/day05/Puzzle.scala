@@ -5,13 +5,13 @@ import scala.io.Source
 
 @main
 def solvePuzzle(): Unit =
-  val input = Source.fromResource("aoc/2017/Day05/Input.txt").getLines.toVector.map(_.toInt)
-  println(s"Part1: ${Puzzle.part1(input)}")
-  println(s"Part2: ${Puzzle.part2(input)}")
+  println(s"Part1: ${Puzzle.part1}")
+  println(s"Part2: ${Puzzle.part2}")
 
 object Puzzle:
-  def part1(input: Vector[Int]): Int = State(0, 0, input).jumps(x => x + 1)
-  def part2(input: Vector[Int]): Int = State(0, 0, input).jumps(x => if x >= 3 then x - 1 else x + 1)
+  val input: Vector[Int] = Source.fromResource("aoc/2017/Day05/Input.txt").getLines.toVector.map(_.toInt)
+  def part1: Int = State(0, 0, input).jumps(_ + 1)
+  def part2: Int = State(0, 0, input).jumps(x => if x >= 3 then x - 1 else x + 1)
 
 case class State(steps: Int, position: Int, instructions: Vector[Int]):
   @tailrec
