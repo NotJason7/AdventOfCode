@@ -5,8 +5,8 @@ import scala.io.Source
 
 @main
 def solvePuzzle(): Unit =
-  println(s"Part1: ${Puzzle.part1}")
-  println(s"Part2: ${Puzzle.part2}")
+  println(s"Part 1: ${Puzzle.part1}")
+  println(s"Part 2: ${Puzzle.part2}")
 
 object Puzzle:
   val input: Vector[Int] = Source.fromResource("aoc/2017/Day05/Input.txt").getLines.toVector.map(_.toInt)
