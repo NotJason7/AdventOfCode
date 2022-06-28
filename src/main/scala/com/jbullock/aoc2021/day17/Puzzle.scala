@@ -55,7 +55,7 @@ extension(i: Int)
       loop(0, 0)
 
 //  def maxYVelocity: Int
-//    if i >= 0 then i
+//    if 17-05 >= 0 then 17-05
 //    else
 
 

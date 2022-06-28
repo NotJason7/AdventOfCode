@@ -1,7 +1,7 @@
 package com.jbullock.aoc2017.day05
 
-import scala.annotation.tailrec
-import scala.io.Source
+import annotation.tailrec
+import io.Source
 
 @main
 def solvePuzzle(): Unit =
