@@ -19,7 +19,7 @@ case class State(max: Int, registers: Map[String, Int])
 case class Change(name: String, value: Int):
   def evaluate(s: State): State =
     val next = s.registers.getOrElse(name, 0) + value
-    State(Set(next, s.max).max, s.registers.updated(name, next))
+    State(next.max(s.max), s.registers.updated(name, next))
 object Change:
   def fromString(s: String): Change = s.split(" ", 2).toVector match
     case Vector(name, update) =>
