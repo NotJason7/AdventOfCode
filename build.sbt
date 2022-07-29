@@ -9,5 +9,8 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.9" % "test",
       "org.creativescala" %% "doodle" % "0.10.1",
+      "org.typelevel" %% "cats-effect" % "3.3.14",
+      "co.fs2" %% "fs2-core" % "3.2.10",
+      "co.fs2" %% "fs2-io" % "3.2.10"
     )
   )
