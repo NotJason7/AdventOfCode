@@ -9,15 +9,8 @@ def solvePuzzle(): Unit =
   println(s"Part 2: ${Puzzle.part2}")
 
 object Puzzle:
-  val input: Vector[String] = Source.fromResource("aoc/2017/Day12/Input.txt")
-    .getLines.toVector
-  val pipes: Vector[Set[Int]] = input.map{
-    _.replace(" ","")
-      .replace("<->",",")
-      .split(",")
-      .toSet
-      .map(_.toInt)
-  }
+  val input: Vector[String] = Source.fromResource("aoc/2017/Day12/Input.txt").getLines.toVector
+  val pipes: Vector[Set[Int]] = input.map("\\d+".r.findAllIn(_).toSet.map(_.toInt))
   val networks: Seq[Set[Int]] = pipes.combineOverlappingSets
   def part1: Int = networks.filter(_.contains(0)).head.size
   def part2: Int = networks.length
