@@ -11,28 +11,25 @@ def solvePuzzle(): Unit =
 object Puzzle:
   val input: Vector[String] = Source.fromResource("aoc/2017/Day12/Input.txt")
     .getLines.toVector
-  given pipes: Vector[Pipe] = input.map(Pipe.fromString)
-  val networks: Set[Network] = pipes.map(Network.fromPipe).toSet
-  def part1: Int = Network.fromPipe(pipes.filter(_.id == 0).head).pipes.size
-  def part2: Int = networks.size
+  val pipes: Vector[Set[Int]] = input.map{
+    _.replace(" ","")
+      .replace("<->",",")
+      .split(",")
+      .toSet
+      .map(_.toInt)
+  }
+  val networks: Seq[Set[Int]] = pipes.combineOverlappingSets
+  def part1: Int = networks.filter(_.contains(0)).head.size
+  def part2: Int = networks.length
 
-case class Network(pipes: Set[Pipe])
-object Network:
-  def fromPipe(p: Pipe)(using allPipes: Vector[Pipe]): Network =
+extension(s: Seq[Set[Int]])
+  def combineOverlappingSets: Seq[Set[Int]] =
     @tailrec
-    def loop(networkPipes: Set[Pipe], toAdd: Set[Int]): Network =
-      if toAdd.isEmpty then Network(networkPipes)
-      else
-        val pipe = allPipes.filter(_.id == toAdd.head).head
-        val nextNetworkPipes = networkPipes ++ Set(pipe)
-        val nextToAdd = toAdd.drop(1) ++ pipe.connections.filterNot(c => nextNetworkPipes.map(_.id).contains(c))
-        loop(nextNetworkPipes, nextToAdd)
-    loop(Set(p), p.connections)
-
-case class Pipe(id: Int, connections: Set[Int])
-object Pipe:
-  def fromString(s: String): Pipe =
-    val split = s.replace(" ","").split("<->").toVector
-    val id = split.head.toInt
-    val connections = split.tail.flatMap(_.toString.split(",").toVector.map(_.toInt)).toSet
-    Pipe(id, connections)
+    def loop(sets: Seq[Set[Int]]): Seq[Set[Int]] =
+      val collapsed = sets.foldLeft(Vector.empty[Set[Int]]){ (v, p) =>
+        v.filterNot(_.intersect(p).isEmpty).headOption match
+          case Some(join: Set[Int]) => v.updated(v.indexOf(join), join ++ p)
+          case None => v :+ p
+      }
+      if collapsed.size == sets.size then sets else loop(collapsed)
+    loop(s)
