@@ -1,6 +1,5 @@
 package com.jbullock.aoc2017.day10
 
-import scala.annotation.tailrec
 import scala.io.Source
 
 @main
@@ -23,12 +22,12 @@ object Puzzle:
     dense.map(_.toHexString).mkString
 
 case class State(knot: Knot, index: Int, skip: Int):
-  def next(size: Int): State =
-    State(knot.twist(index, size), (index + size + skip) % knot.values.length, skip+1)
+  def next(size: Int): State = State(knot.twist(index, size), (index + size + skip) % knot.values.length, skip+1)
 
 case class Knot(values: Vector[Int]):
   def twist(current: Int, size: Int): Knot =
     val start = current % values.length
     val shift = values.takeRight(values.length-start) ++ values.take(start)
     val twist = shift.slice(0, size).reverse ++ shift.takeRight(values.length-size)
-    Knot(twist.takeRight(start) ++ twist.take(values.length-start))
+    val unshift = twist.takeRight(start) ++ twist.take(values.length-start)
+    Knot(unshift)
