@@ -5,15 +5,12 @@ import scala.io.Source
 
 @main
 def solvePuzzle(): Unit =
-  println(s"Part 1: ${Puzzle.part1}")
-  println(s"Part 2: ${Puzzle.part2}")
+  println(s"Part 1: ${Puzzle.networks.filter(_.contains(0)).head.size}")
+  println(s"Part 2: ${Puzzle.networks.length}")
 
 object Puzzle:
   val input: Vector[String] = Source.fromResource("aoc/2017/Day12/Input.txt").getLines.toVector
-  val pipes: Vector[Set[Int]] = input.map("\\d+".r.findAllIn(_).toSet.map(_.toInt))
-  val networks: Seq[Set[Int]] = pipes.combineOverlappingSets
-  def part1: Int = networks.filter(_.contains(0)).head.size
-  def part2: Int = networks.length
+  val networks: Seq[Set[Int]] = input.map("\\d+".r.findAllIn(_).toSet.map(_.toInt)).combineOverlappingSets
 
 extension(s: Seq[Set[Int]])
   def combineOverlappingSets: Seq[Set[Int]] =
