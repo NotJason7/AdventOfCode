@@ -5,7 +5,7 @@ import scala.io.Source
 @main
 def solvePuzzle(): Unit =
   println(s"Part 1: ${Puzzle.part1}")
-  println(s"Part 2: ${Puzzle.part2}")
+  println(s"Part 2: ${Puzzle.part2(Puzzle.input)}")
 
 object Puzzle:
   val input: String = Source.fromResource("aoc/2017/Day10/Input.txt").getLines.toVector.head
@@ -14,8 +14,8 @@ object Puzzle:
     val twists = input.split(",").toVector.map(_.toInt)
     val end = twists.foldLeft(start)((s, v) => s.next(v))
     end.knot.values.take(2).product
-  def part2: String =
-    val twists = input.map(_.toInt).toVector ++ Vector(17,31,73,47,23)
+  def part2(s: String): String =
+    val twists = s.map(_.toInt).toVector ++ Vector(17,31,73,47,23)
     val repeated = Vector.fill(64)(twists).flatten
     val sparse = repeated.foldLeft(start)((s, v) => s.next(v)).knot.values
     val dense = sparse.grouped(16).toVector.map(_.reduce(_ ^ _))
