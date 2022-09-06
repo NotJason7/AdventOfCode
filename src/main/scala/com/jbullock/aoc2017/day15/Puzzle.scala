@@ -16,7 +16,7 @@ enum Mode:
   case Normal, Picky
 
 case class State(a: Long, b: Long, mode: Mode):
-  val (aFactor, bFactor, divisor) = (16807, 48271, 2147483647)
+  val (aFactor, bFactor, divisor) = (16807, 48271, Int.MaxValue)
 
   def lowest16BitsMatch: Boolean = a.toPaddedBinaryString(32).takeRight(16) == b.toPaddedBinaryString(32).takeRight(16)
 
