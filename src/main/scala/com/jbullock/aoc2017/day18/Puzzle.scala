@@ -5,65 +5,70 @@ import scala.io.Source
 
 object Puzzle:
   @main def solve(): Unit =
-    val instructions = Source.fromResource("aoc/2017/Day18/Input.txt").getLines.toVector
-//    val instructions = Vector("set a 1","add a 2","mul a a","mod a 5","snd a","set a 0","rcv a","jgz a -1","set a 1","jgz a -2")
-    val start = Assembly(None, None, Map.empty[String, Long], instructions, 0)
-    val received = start.followInstructionsPart1()
-    println(s"Part 1: $received")
-    val program0 = Assembly(None, None, Map("p" -> 0L), instructions, 0)
-    val program1 = Assembly(None, None, Map("p" -> 1L), instructions, 0)
+    given instructions: Vector[String] = Source.fromResource("aoc/2017/Day18/Input.txt").getLines.toVector
+//    given instructions = Vector("set a 1","add a 2","mul a a","mod a 5","snd a","set a 0","rcv a","jgz a -1","set a
+//    1","jgz a -2")
+//    given instructions: Vector[String] = Vector("snd 1","snd 2","snd p","rcv a","rcv b","rcv c","rcv d")
+    val program0 = Program.fromId(0)
+    val program1 = Program.fromId(1)
+//    val program0 = Assembly(0, None, 0L, Vector.empty[BigInt], Map("p" -> 0L), 0)
+//    val program1 = Assembly(1, None, 0L, Vector.empty[BigInt], Map("p" -> 1L), 0)
+//    val start = Duet(program0, program1)
+//    val end = start.runUntilTerminate
+//    println(s"Part 2: ${end.program1.totalSent}")
 
-//    val end = i.asInstruction(start)
-//    println(end)
+//case class Duet(program0: Assembly, queue0: Vector[Long], program1: Assembly, queue1: Vector[Long])(using instructions: Vector[String]):
+//  def next: Duet =
+//    val stage0 = program0.followInstruction
+//    val stage1 = program1.followInstruction
+//    val next0 = stage0.receiveExternal(stage1.sent)
+//    val next1 = stage1.receiveExternal(stage0.sent)
+//    Duet(next0, next1)
+//  @tailrec final def runUntilTerminate: Duet =
+//    val next = this.next
+//    if this == next then this
+//    else next.runUntilTerminate
 
-//snd X plays a sound with a frequency equal to the value of X.
-//set X Y sets register X to the value of Y.
-//add X Y increases register X by the value of Y.
-//mul X Y sets register X to the result of multiplying the value contained in register X by the value of Y.
-//mod X Y sets register X to the remainder of dividing the value contained in register X by the value of Y (that is, it sets X to the result of X modulo Y).
-//rcv X recovers the frequency of the last sound played, but only when the value of X is not zero. (If it is zero, the command does nothing.)
-//jgz X Y jumps with an offset of the value of Y, but only if the value of X is greater than zero. (An offset of 2 skips the next instruction, an offset of -1 jumps to the previous instruction, and so on.)
-case class Duet(program0: Assembly, program1: Assembly)
 
-case class Assembly(
-    sent: Option[Long],
-    received: Option[Long],
-    registers: Map[String, Long],
-    instructions: Vector[String],
-    current: Int
-):
-  def xGet(x: String): Long = registers.getOrElse(x, 0L)
-  def yGet(y: String): Long = y.toLongOption match
-    case Some(n) => n
+case class Program(
+    id: Int,
+    sent: Option[BigInt],
+    received: Vector[BigInt],
+    registers: Map[String, BigInt],
+    instruction: Int
+)(using instructions: Vector[String]):
+  def xGet(x: String): BigInt = registers.getOrElse(x, 0)
+  def yGet(y: String): BigInt = y.toIntOption match
+    case Some(n) => BigInt(n)
     case None    => xGet(y)
-  def snd(x: String): Assembly =
-    this.copy(sent = Some(xGet(x)), current = current + 1)
-  def set(x: String, y: String): Assembly =
-    this.copy(registers = registers.updated(x, yGet(y)), current = current + 1)
-  def add(x: String, y: String): Assembly = this.copy(
+  def snd(x: String): Program =
+    this.copy(sent = Some(xGet(x)), instruction = instruction + 1)
+  def set(x: String, y: String): Program = this.copy(
+    registers = registers.updated(x, yGet(y)),
+    instruction = instruction + 1)
+  def add(x: String, y: String): Program = this.copy(
     registers = registers.updated(x, (xGet(x) + yGet(y))),
-    current = current + 1
-  )
-  def mul(x: String, y: String): Assembly = this.copy(
+    instruction = instruction + 1)
+  def mul(x: String, y: String): Program = this.copy(
     registers = registers.updated(x, (xGet(x) * yGet(y))),
-    current = current + 1
-  )
-  def mod(x: String, y: String): Assembly = this.copy(
+    instruction = instruction + 1)
+  def mod(x: String, y: String): Program = this.copy(
     registers = registers.updated(x, (xGet(x) % yGet(y))),
-    current = current + 1
-  )
-  def rcv(x: String): Assembly =
-    if xGet(x) > 0 && sent.getOrElse("") != "" then
-      this.copy(received = Some(sent.get))
-    else this.copy(current = current + 1)
-  def jgz(x: String, y: String): Assembly =
-    if xGet(x) > 0 then this.copy(current = (current + yGet(y).toInt))
-    else this.copy(current = current + 1)
-  def followInstruction: Assembly =
-    val instruction = instructions(current.toInt)
-    val x = instruction(4).toString
-    val y = instruction.drop(6)
-    instruction.take(3) match
+    instruction = instruction + 1)
+  def rcv(x: String): Program = received.headOption match
+    case Some(i) => this.copy(
+      registers = registers.updated(x, i),
+      received = received.drop(1),
+      instruction = instruction + 1)
+    case _ => this
+  def jgz(x: String, y: String): Program =
+    if xGet(x) > 0 then this.copy(instruction = (instruction + yGet(y).toInt))
+    else this.copy(instruction = instruction + 1)
+  def followInstruction: Program =
+    val i = instructions(instruction)
+    val x = i(4).toString
+    val y = i.drop(6)
+    i.take(3) match
       case "snd" => this.snd(x)
       case "set" => this.set(x, y)
       case "add" => this.add(x, y)
@@ -71,12 +76,11 @@ case class Assembly(
       case "mod" => this.mod(x, y)
       case "rcv" => this.rcv(x)
       case "jgz" => this.jgz(x, y)
-      case _ =>
-        throw new RuntimeException(
-          s"Unexpected instruction found: $instruction"
-        )
-  @tailrec final def followInstructionsPart1(): String =
-    val next = this.followInstruction
-    next.received match
-      case Some(rcv) => rcv.toString
-      case _ => next.followInstructionsPart1()
+      case _ => throw new RuntimeException(s"Unexpected instruction found: $i")
+  @tailrec final def followUntilWait: Program = instructions(instruction).take(3) match
+    case "rcv" if received.isEmpty => this
+    case _ => this.followInstruction.followUntilWait
+object Program:
+  def fromId(id: Int)(using instructions: Vector[String]): Program =
+    Program(id, None, Vector.empty[BigInt], Map("p" -> BigInt(id)), 0)
+
