@@ -14,18 +14,15 @@ extension(s: Symbol) {
     Symbol(s.value, true)
 }
 
-case class Line(symbols: List[Symbol])
-extension(l: Line) {
-  def hasWon: Boolean =
-    l.symbols.forall(_.isMarked)
+case class Line(symbols: List[Symbol]) :
+  def hasWon: Boolean = symbols.forall(_.isMarked)
   def mark(call: Int): Line =
     val toMark = Symbol(call, false)
-    if l.symbols.contains(toMark) then
-      Line(toMark.mark :: l.symbols.filterNot(_ == toMark))
-    else l
+    if symbols.contains(toMark) then
+      Line(toMark.mark :: symbols.filterNot(_ == toMark))
+    else this
   def score: Int =
-    l.symbols.map(s => if s.isMarked then 0 else s.value).sum
-}
+    symbols.map(s => if s.isMarked then 0 else s.value).sum
 
 case class Board(rows: List[Line], columns: List[Line])
 extension(b: Board) {
