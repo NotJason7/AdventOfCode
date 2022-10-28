@@ -2,8 +2,7 @@ package com.jbullock.aoc2017.day22
 
 import scala.io.Source
 
-@main
-def solvePuzzle(): Unit =
+@main def solvePuzzle(): Unit =
   val infections = Source
     .fromResource("aoc/2017/Day22/Input.txt")
     .getLines
