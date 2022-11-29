@@ -14,9 +14,9 @@ import scala.io.Source
   println(s"Part 2: ${longestStrongestBridge.strength}")
 
 case class Block(a: Int, b: Int):
-  def strength: Int             = a + b
+  val strength: Int             = a + b
   def contains(i: Int): Boolean = a == i || b == i
-  def reverse: Block            = Block(b, a)
+  val reverse: Block            = Block(b, a)
   override def toString         = s"$a/$b"
 
 case class Bridge(blocks: Vector[Block])(using allBlocks: Vector[Block]):
@@ -40,9 +40,8 @@ def buildBridges(start: Int)(using allBlocks: Vector[Block]): Set[Bridge] =
   @tailrec def loop(terminals: Set[Bridge], bridges: Set[Bridge]): Set[Bridge] =
     if bridges.isEmpty then terminals
     else
-      val extensions    = bridges.flatMap(_.extend)
-      val nextTerminals = terminals ++ extensions.filter(_.isTerminal)
-      val nextBridges   = extensions.filterNot(_.isTerminal)
+      val (newTerminals, nextBridges) = bridges.flatMap(_.extend).partition(_.isTerminal)
+      val nextTerminals               = terminals ++ newTerminals
       loop(nextTerminals, nextBridges)
 
   val startBridge = Bridge(Vector(Block(start, start)))

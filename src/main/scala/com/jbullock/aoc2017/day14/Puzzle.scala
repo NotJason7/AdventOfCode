@@ -4,51 +4,54 @@ import com.jbullock.aoc2017.day10.Puzzle.part2 as knotHash
 
 import scala.annotation.tailrec
 
-
 object Puzzle:
   @main
   def solve(): Unit =
-    val key = "ugkiagan"
-//    val key = "flqrgnkx"
-    val rows = (0 to 127).toVector.map(n => s"$key-$n")
-    val hashed = rows.map(knotHash).map(h => BigInt(h, 16).toString(2).reverse.padTo(128,0).reverse.mkString)
-    val used = hashed.map(_.count(_ == '1')).sum
+    val key    = "ugkiagan"
+    val rows   = (0 to 127).toVector.map(n => s"$key-$n")
+    val hashed = rows.map(knotHash).map(_.hexToBinary)
+    val used   = hashed.map(_.count(_ == '1')).sum
     println(s"Part 1: $used")
 
-//    val map = (for {
-//      y <- (0 to 127)
-//      x <- (0 to 127)
-//    } yield Position(x, y)).toVector.filter(p => hashed(p.y)(p.x) == '1')
-//    val regions = findRegions(map)
-//    println(regions.size)
+    val grid = (for {
+      y <- (0 to 127)
+      x <- (0 to 127)
+    } yield Position(x, y)).toSet.filter(p => hashed(p.y)(p.x) == '1')
+    val regions = findRegions(grid)
+    println(s"Found ${regions.size} regions, should be 1242")
+
+extension (s: String)
+  def hexToBinary: String = s.map(c => ("000" + BigInt(s"$c", 16).toString(2)).takeRight(4)).mkString
 
 case class Position(x: Int, y: Int):
-  def adjacent: Vector[Position] = Vector(
-    Position(x-1, y), Position(x+1, y),
-    Position(x, y-1), Position(x, y+1)
+  def adjacent: Set[Position] = Set(
+    Position(x - 1, y),
+    Position(x + 1, y),
+    Position(x, y - 1),
+    Position(x, y + 1)
   ).filter(p => p.x >= 0 && p.x <= 127 && p.y >= 0 && p.y <= 127)
 
-//case class Region(positions: Set[Position])
-//object Region:
-//  def fromPosition(p: Position, valid: Vector[Position]): Region =
-//    @tailrec
-//    def loop(toSearch: Vector[Position], region: Set[Position]): Region =
-//      if toSearch.isEmpty then Region(region) else
-//        val next = toSearch.head
-//        val newInRegion = next.adjacent.filter(valid.contains).filterNot(region.contains)
-//        val positionsToSearch = newInRegion ++ toSearch.tail
-//        val totalRegion = region ++ newInRegion.toSet
-//        loop(positionsToSearch, totalRegion)
-//    loop(Vector(p), Set(p))
-//
-//def findRegions(positions: Vector[Position]): Set[Region] =
-//  @tailrec
-//  def loop(toSearch: Vector[Position], regions: Set[Region]): Set[Region] =
-//    if toSearch.isEmpty then regions else
-//      val nextPosition = toSearch.head
-//      val region = Region.fromPosition(nextPosition, positions)
-//      val totalRegions = regions + region
-//      val containedPositions = regions.map(_.positions).flatten
-//      val leftToSearch = toSearch.filterNot(containedPositions.contains)
-//      loop(leftToSearch, totalRegions)
-//  loop(positions, Set.empty[Set[Position]])
+case class Region(positions: Set[Position])
+object Region:
+  def fromValidPosition(p: Position, valid: Set[Position]): Region =
+    @tailrec
+    def loop(toSearch: Set[Position], region: Set[Position]): Region =
+      if toSearch.isEmpty then Region(region)
+      else
+        val nextPosition             = toSearch.head
+        val nextRegion               = region + nextPosition
+        val validAdjacentNotInRegion = nextPosition.adjacent.diff(nextRegion).intersect(valid)
+        val nextToSearch             = toSearch - nextPosition ++ validAdjacentNotInRegion
+        loop(nextToSearch, nextRegion)
+    loop(Set(p), Set.empty[Position])
+
+def findRegions(positions: Set[Position]): Set[Region] =
+  @tailrec
+  def loop(toSearch: Set[Position], regions: Set[Region]): Set[Region] =
+    if toSearch.isEmpty then regions
+    else
+      val region       = Region.fromValidPosition(toSearch.head, positions)
+      val leftToSearch = toSearch.diff(region.positions)
+      val totalRegions = regions + region
+      loop(leftToSearch, totalRegions)
+  loop(positions, Set.empty[Region])
