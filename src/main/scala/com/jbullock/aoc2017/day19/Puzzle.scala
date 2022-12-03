@@ -1,7 +1,5 @@
 package com.jbullock.aoc2017.day19
 
-import jdk.incubator.vector.VectorOperators
-
 import scala.annotation.tailrec
 import scala.io.Source
 
