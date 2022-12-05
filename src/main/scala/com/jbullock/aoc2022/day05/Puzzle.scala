@@ -32,8 +32,7 @@ object Instruction:
 
 case class Cargo(stacks: Vector[Vector[Char]]):
   def followInstruction(i: Instruction, canMultiCratePickUp: Boolean): Cargo =
-    val newSource = stacks(i.source).drop(i.amount)
-    val taken     = stacks(i.source).take(i.amount)
-    val moved     = if canMultiCratePickUp then taken else taken.reverse
-    val newTarget = moved ++ stacks(i.target)
+    val (taken, newSource) = stacks(i.source).splitAt(i.amount)
+    val moved              = if canMultiCratePickUp then taken else taken.reverse
+    val newTarget          = moved ++ stacks(i.target)
     Cargo(stacks.updated(i.source, newSource).updated(i.target, newTarget))
