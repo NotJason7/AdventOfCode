@@ -6,7 +6,7 @@ import scala.annotation.tailrec
   val input = io.Source.fromResource("aoc/2022/Day09/Input.txt").getLines.toVector
   val moves = input.map(Move.fromString)
   val part1 = moves.foldLeft(Rope.ofLengthN(2))((rope, move) => rope.makeMove(move)).tailVisited.size
-  println(s"Part 1: ${part1}")
+  println(s"Part 1: $part1")
   val part2 = moves.foldLeft(Rope.ofLengthN(10))((rope, move) => rope.makeMove(move)).tailVisited.size
   println(s"Part 2: $part2")
 
@@ -17,11 +17,8 @@ case object Left  extends Direction(-1, 0)
 case object Right extends Direction(1, 0)
 
 case class Position(x: Int, y: Int):
-  def move(d: Direction): Position = Position(x + d.x, y + d.y)
-  def moveToward(p: Position): Position =
-    val xSign = (p.x - x).sign
-    val ySign = (p.y - y).sign
-    Position(x + xSign, y + ySign)
+  def move(d: Direction): Position           = Position(x + d.x, y + d.y)
+  def moveToward(p: Position): Position      = Position(x + (p.x - x).sign, y + (p.y - y).sign)
   def distancesFrom(p: Position): (Int, Int) = ((x - p.x).abs, (y - p.y).abs)
 object Position:
   val origin: Position = Position(0, 0)
