@@ -26,7 +26,7 @@ case object Left  extends Direction(-1, 0)
 case object Right extends Direction(1, 0)
 
 case class Position(x: Int, y: Int):
-  def move(direction: Direction)(using trees: Map[Position, Int]): Position = Position(x + direction.x, y + direction.y)
+  def move(direction: Direction): Position = Position(x + direction.x, y + direction.y)
 
 case class Tree(position: Position, height: Int):
   def asMap: Map[Position, Int]                         = Map(position -> height)
