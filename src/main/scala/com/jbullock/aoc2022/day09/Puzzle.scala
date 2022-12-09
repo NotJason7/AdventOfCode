@@ -3,13 +3,11 @@ package com.jbullock.aoc2022.day09
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input      = io.Source.fromResource("aoc/2022/Day09/Input.txt").getLines.toVector
-  val moves      = input.map(Move.fromString)
-  val part1Start = Rope.ofLengthN(2)
-  val part1      = moves.foldLeft(part1Start)((rope, move) => rope.makeMove(move)).tailVisited.size
+  val input = io.Source.fromResource("aoc/2022/Day09/Input.txt").getLines.toVector
+  val moves = input.map(Move.fromString)
+  val part1 = moves.foldLeft(Rope.ofLengthN(2))((rope, move) => rope.makeMove(move)).tailVisited.size
   println(s"Part 1: ${part1}")
-  val part2Start = Rope.ofLengthN(10)
-  val part2      = moves.foldLeft(part2Start)((rope, move) => rope.makeMove(move)).tailVisited.size
+  val part2 = moves.foldLeft(Rope.ofLengthN(10))((rope, move) => rope.makeMove(move)).tailVisited.size
   println(s"Part 2: $part2")
 
 sealed trait Direction(val x: Int, val y: Int)
@@ -19,7 +17,7 @@ case object Left  extends Direction(-1, 0)
 case object Right extends Direction(1, 0)
 
 case class Position(x: Int, y: Int):
-  def move(direction: Direction): Position = Position(x + direction.x, y + direction.y)
+  def move(d: Direction): Position = Position(x + d.x, y + d.y)
   def moveToward(p: Position): Position =
     val xSign = (p.x - x).sign
     val ySign = (p.y - y).sign
