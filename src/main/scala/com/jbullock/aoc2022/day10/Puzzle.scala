@@ -1,4 +1,4 @@
-package com.jbullock.aoc2022.day09.day10
+package com.jbullock.aoc2022.day10
 
 @main def solvePuzzle(): Unit =
   val input     = io.Source.fromResource("aoc/2022/Day10/Input.txt").getLines.toVector
