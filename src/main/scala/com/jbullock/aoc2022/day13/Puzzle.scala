@@ -3,29 +3,10 @@ package com.jbullock.aoc2022.day13
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input =
-    io.Source.fromResource("aoc/2022/Day13/Sample.txt").getLines.toVector.filterNot(_.isBlank).grouped(2).toVector
-  val signals = input.map(DistressSignal.fromVector2)
-//  val test    = signals(4).left.groupMap(_.list)(_.number).values.toVector
-//  println(test)
-//  println(signals(4))
-//  val s = signals(6)
-//  val l = s.left.groupMap(_.list)(_.number).values.toVector
-//  val r = s.right.groupMap(_.list)(_.number).values.toVector
-//  println(s"$l\n$r")
-//  val x = l.zip(r).map { case (left, right) =>
-//    left.zip(right).forall { (l, r) =>
-//      (l, r) match
-//        case (None, _)          => true
-//        case (Some(_), None)    => false
-//        case (Some(x), Some(y)) => x <= y
-//    }
-//  }
-//  println(x)
-  val rightOrder = signals.map(_.inRightOrder)
-//expected - T T F T F T F F
-//actual   - T F F T F T F F
-  println(rightOrder)
+  val input   = io.Source.fromResource("aoc/2022/Day13/Input.txt").getLines.toVector
+  val signals = input.filterNot(_.isBlank).grouped(2).toVector.map(DistressSignal.fromVector2)
+  val part1   = signals.map(_.inRightOrder).zipWithIndex.filter(_._1).map(_._2 + 1).sum
+  println(s"Part 1: $part1")
 
 def parseDistressString(s: String): Vector[Distress] =
   @tailrec def loop(remaining: String, accumulator: Accumulator): Vector[Distress] = remaining.headOption match
@@ -36,29 +17,28 @@ def parseDistressString(s: String): Vector[Distress] =
     case Some(_) =>
       val intString     = remaining.takeWhile(c => !Set('[', ',', ']').contains(c))
       val nextRemaining = remaining.drop(intString.length)
-      loop(nextRemaining, accumulator.addSignal(intString.toInt))
+      loop(nextRemaining, accumulator.addSignal(intString.toIntOption))
 
   loop(s, Accumulator(Vector.empty[Distress], 0, Vector(0)))
 
-case class Distress(list: Int, level: Int, number: Option[Int])
+case class Distress(list: Int, level: Int, number: Option[Int]):
+  override def toString: String = s"$list:${number.getOrElse(-1)}"
 case class Accumulator(signals: Vector[Distress], totalNests: Int, nestStack: Vector[Int]):
-  def currentDistress(i: Option[Int]): Distress = Distress(nestStack.head, nestStack.size, i)
-  def addSignal(i: Int): Accumulator            = this.copy(signals = signals :+ currentDistress(Some(i)))
-  def deeper: Accumulator =
-    Accumulator(signals :+ currentDistress(None), totalNests + 1, nestStack.prepended(totalNests + 1))
-  def shallower: Accumulator = this.copy(totalNests = totalNests, nestStack.tail)
+  def distressAtCurrent(i: Option[Int]): Distress = Distress(nestStack.head, nestStack.size, i)
+  def addSignal(o: Option[Int]): Accumulator      = this.copy(signals = signals :+ distressAtCurrent(o))
+  def deeper: Accumulator    = Accumulator(signals, totalNests + 1, nestStack.prepended(totalNests + 1))
+  def shallower: Accumulator = this.addSignal(None).copy(nestStack = nestStack.tail)
 
 case class DistressSignal(left: Vector[Distress], right: Vector[Distress]):
   def inRightOrder: Boolean =
 
     @tailrec def loop(leftRemaining: Vector[Distress], rightRemaining: Vector[Distress]): Boolean =
       (leftRemaining.headOption, rightRemaining.headOption) match
-        case (None, None)    => true
-        case (None, Some(_)) => true
+        case (None, _)       => true
         case (Some(_), None) => false
         case (Some(l), Some(r)) =>
-          if (l.list == r.list && l.number.getOrElse(-1) <= r.number.getOrElse(-1)) then
-            loop(leftRemaining.tail, rightRemaining.tail)
+          if l.number.getOrElse(-1) < r.number.getOrElse(-1) then true
+          else if l.number == r.number then loop(leftRemaining.tail, rightRemaining.tail)
           else false
 
     loop(left, right)
