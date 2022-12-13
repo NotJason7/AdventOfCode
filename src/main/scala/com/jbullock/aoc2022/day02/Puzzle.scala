@@ -1,7 +1,7 @@
 package com.jbullock.aoc2022.day02
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day02/Input.txt").getLines.toVector
+  val input = scala.io.Source.fromResource("aoc/2022/Day02/Input.txt").getLines.toVector
   val games = input.map(Game.fromMovesString)
   val part1 = games.map(_.score).sum
   println(s"Part 1: $part1")

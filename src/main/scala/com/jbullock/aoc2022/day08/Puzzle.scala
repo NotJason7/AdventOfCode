@@ -3,7 +3,7 @@ package com.jbullock.aoc2022.day08
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day08/Input.txt").getLines.toVector
+  val input = scala.io.Source.fromResource("aoc/2022/Day08/Input.txt").getLines.toVector
   val trees = for
     y <- input.indices
     x <- input.head.indices

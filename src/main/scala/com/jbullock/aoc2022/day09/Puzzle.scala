@@ -3,7 +3,7 @@ package com.jbullock.aoc2022.day09
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day09/Input.txt").getLines.toVector
+  val input = scala.io.Source.fromResource("aoc/2022/Day09/Input.txt").getLines.toVector
   val moves = input.map(Move.fromString)
   val part1 = moves.foldLeft(Rope.ofLengthN(2))((rope, move) => rope.makeMove(move)).tailVisited.size
   println(s"Part 1: $part1")

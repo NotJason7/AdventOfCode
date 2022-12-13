@@ -1,7 +1,7 @@
 package com.jbullock.aoc2022.day10
 
 @main def solvePuzzle(): Unit =
-  val input     = io.Source.fromResource("aoc/2022/Day10/Input.txt").getLines.toVector
+  val input     = scala.io.Source.fromResource("aoc/2022/Day10/Input.txt").getLines.toVector
   val signals   = input.map(_.drop(5).toIntOption)
   val processed = CPU(Vector(1)).runSignals(signals)
   val part1     = (20 to 220 by 40).toVector.flatMap(processed.signalStrengthAt).sum

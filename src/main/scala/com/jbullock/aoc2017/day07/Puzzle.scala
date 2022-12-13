@@ -1,6 +1,6 @@
 package com.jbullock.aoc2017.day07
 
-import io.Source
+import scala.io.Source
 import scala.annotation.tailrec
 
 @main

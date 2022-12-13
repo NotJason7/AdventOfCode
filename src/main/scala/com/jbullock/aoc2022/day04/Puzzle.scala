@@ -1,7 +1,7 @@
 package com.jbullock.aoc2022.day04
 
 @main def solvePuzzle(): Unit =
-  val input        = io.Source.fromResource("aoc/2022/Day04/Input.txt").getLines.toVector
+  val input        = scala.io.Source.fromResource("aoc/2022/Day04/Input.txt").getLines.toVector
   val numbers      = input.map(s => "[0-9]+".r.findAllIn(s).toVector.map(_.toInt))
   val assignments  = numbers.map(Assignment.fromVector)
   val fullOverlaps = assignments.count(_.fullOverlap)

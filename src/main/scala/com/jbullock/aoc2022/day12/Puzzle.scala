@@ -3,7 +3,7 @@ package com.jbullock.aoc2022.day12
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day12/Input.txt").getLines.toVector
+  val input = scala.io.Source.fromResource("aoc/2022/Day12/Input.txt").getLines.toVector
   given heightMap: Map[Position, Int] = (for
     y <- input.indices
     x <- input.head.indices

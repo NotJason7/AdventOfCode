@@ -1,7 +1,7 @@
 package com.jbullock.aoc2017.day20
 
 import annotation.tailrec
-import io.Source
+import scala.io.Source
 object Puzzle:
   @main def solve(): Unit =
     val input              = Source.fromResource("aoc/2017/Day20/Input.txt").getLines.toVector

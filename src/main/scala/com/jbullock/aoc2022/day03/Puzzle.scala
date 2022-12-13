@@ -1,7 +1,7 @@
 package com.jbullock.aoc2022.day03
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day03/Input.txt").getLines.toVector
+  val input = scala.io.Source.fromResource("aoc/2022/Day03/Input.txt").getLines.toVector
   val rucksacks = input.map(Rucksack.apply)
   val priorities = (('a' to 'z') ++ ('A' to 'Z')).zipWithIndex.map(x => (x._1, x._2 + 1)).toMap
   val errors = rucksacks.flatMap(rucksack => priorities.get(rucksack.error))

@@ -3,7 +3,7 @@ package com.jbullock.aoc2022.day07
 import scala.annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input          = io.Source.fromResource("aoc/2022/Day07/Input.txt").getLines.toVector
+  val input          = scala.io.Source.fromResource("aoc/2022/Day07/Input.txt").getLines.toVector
   val paths          = buildFileStructure(input)
   val directorySizes = paths.values.filter(_.isInstanceOf[Directory]).map(_.diskSize(paths))
   val part1          = directorySizes.filter(_ < 100000).sum

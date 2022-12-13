@@ -1,7 +1,7 @@
 package com.jbullock.aoc2022.day11
 
 @main def solvePuzzle(): Unit =
-  val input = io.Source.fromResource("aoc/2022/Day11/Input.txt").getLines.toVector.filter(_.nonEmpty)
+  val input = scala.io.Source.fromResource("aoc/2022/Day11/Input.txt").getLines.toVector.filter(_.nonEmpty)
   given Int = input.filter(_.startsWith("  Test")).map(_.drop(21).toInt).product
   val calm  = Round(input.grouped(6).toVector.map(v => Monkey.fromInputVector(v, false)))
   val part1 = (1 to 20).foldLeft(calm)((round, _) => round.play).monkeyBusiness

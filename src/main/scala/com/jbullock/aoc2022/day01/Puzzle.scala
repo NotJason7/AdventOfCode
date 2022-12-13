@@ -3,7 +3,7 @@ package com.jbullock.aoc2022.day01
 import annotation.tailrec
 
 @main def solvePuzzle(): Unit =
-  val input: Vector[String] = io.Source.fromResource("aoc/2022/Day01/Input.txt").getLines.toVector
+  val input: Vector[String] = scala.io.Source.fromResource("aoc/2022/Day01/Input.txt").getLines.toVector
   val elfTotalCalories = input
     .appended("")
     .foldLeft((0, Vector.empty[Int]))((accumulator: (Int, Vector[Int]), calorieAmountString: String) =>
@@ -21,7 +21,7 @@ import annotation.tailrec
   val recursiveTotal = sumElfCalories(input)
   val part1b         = recursiveTotal.max
   println(s"Part 1b: $part1b")
-  val part2b         = recursiveTotal.sortWith(_ > _).take(3).sum
+  val part2b = recursiveTotal.sortWith(_ > _).take(3).sum
   println(s"Part 2b: $part2b")
 
 def sumElfCalories(calorieStrings: Vector[String]): Vector[Int] =
