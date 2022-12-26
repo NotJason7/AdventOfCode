@@ -1,49 +1,45 @@
 package com.jbullock.aoc2022.day13
 
 import scala.annotation.tailrec
-import io.circe.Json
-import io.circe.parser.parse
 
 @main def solvePuzzle(): Unit =
   val input   = scala.io.Source.fromResource("aoc/2022/Day13/Input.txt").getLines.toVector.filterNot(_.isBlank)
-  val pairs   = input.grouped(2).toVector
-  val signals = pairs.map(v => v.map(parseJson)).map(v => Signal(v(0), v(1)))
-  val part1   = signals.map(_.isOrdered).zipWithIndex.filter(_._1).map(_._2 + 1).sum
-  println(s"Part 1: $part1")
-  val inputWithDividers   = input ++ Vector("[[2]]", "[[6]]")
-  val signalsWithDividers = inputWithDividers.map(parseJson)
-  val sorted              = signalsWithDividers.sortWith { case (j: Json, k: Json) => j.isBefore(k) }
-  val divider2index       = sorted.indexOf(parseJson("[[2]]")) + 1
-  val divider6index       = sorted.indexOf(parseJson("[[6]]")) + 1
-  val part2               = divider2index * divider6index
-  println(s"Part 2: $part2")
+  val tokens  = input.map(formatSignal)
+  val signals = tokens.grouped(2).toVector.map(v => Signal(v(0), v(1)))
+  val part1   = signals.map(_.isSortedSignal).zipWithIndex.filter(_._1).map(_._2 + 1).sum
+  println(s"Part 1: $part1") //5588
+  val divider2           = Vector("[", "[", "2", "]", "]")
+  val divider6           = Vector("[", "[", "6", "]", "]")
+  val tokensWithDividers = input.map(formatSignal) ++ Vector(divider2, divider6)
+  val sorted             = tokensWithDividers.sortWith(_.isSorted(_))
+  val divider2index      = sorted.indexOf(divider2) + 1
+  val divider6index      = sorted.indexOf(divider6) + 1
+  val part2              = divider2index * divider6index
+  println(s"Part 2: $part2") //23958
 
-def parseJson(s: String): Json = parse(s) match
-  case Right(json) => json
-  case Left(e)     => throw RuntimeException(s"Couldn't parse $s as json: $e")
-case class Signal(left: Json, right: Json):
-  val isOrdered: Boolean = left.isBefore(right)
+case class Signal(left: Vector[String], right: Vector[String]):
+  def isSortedSignal: Boolean = left.isSorted(right)
 
-extension (j: Json)
-  def isBefore(k: Json): Boolean = (j.isNumber, k.isNumber) match
-    case (true, true) => j.isNumericallyBefore(k)
-    case _            => j.isArrayicallyBefore(k)
+def formatSignal(s: String) = s
+  .replace("[", ",[,")
+  .replace("]", ",],")
+  .split(',')
+  .toVector
+  .flatten
+  .map(_.toString)
 
-  def toInt: Int = j.asNumber.flatMap(_.toInt).get
+extension (leftVector: Vector[String])
+  def isSorted(rightVector: Vector[String]): Boolean =
+    @tailrec def loop(left: Vector[String], right: Vector[String]): Boolean =
+      (left.headOption, right.headOption) match
+        case (Some(l), Some(r)) =>
+          if l == r then loop(left.tail, right.tail)
+          else if r == "]" then false
+          else if l == "]" then true
+          else if l == "[" then loop(left.tail, right)
+          else if r == "[" then loop(left, right.tail)
+          else l.toInt <= r.toInt
+        case (Some(l), None) => false
+        case _               => true
 
-  def toVector: Vector[Json] = j.asArray.get
-
-  def isNumericallyBefore(k: Json): Boolean = j.toInt < k.toInt
-
-  def isArrayicallyBefore(k: Json): Boolean =
-    val x = if j.isNumber then Json.fromValues(List(j)).toVector else j.toVector
-    val y = if k.isNumber then Json.fromValues(List(k)).toVector else k.toVector
-    (x.headOption, y.headOption) match
-      case (Some(a), Some(b)) if !a.isBefore(b) => false
-//      case (Some(a), Some(b)) =>
-//        val n = Json.fromValues(x.tail.toList)
-//        val m = Json.fromValues(y.tail.toList)
-//        n.isBefore(m)
-      case (Some(_), None) => false
-      case (None, Some(_)) => true
-      case (None, None)    => true
+    loop(leftVector, rightVector)
