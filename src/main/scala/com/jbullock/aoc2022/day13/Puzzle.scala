@@ -5,9 +5,13 @@ import scala.annotation.tailrec
 @main def solvePuzzle(): Unit =
   val input  = scala.io.Source.fromResource("aoc/2022/Day13/Input.txt").getLines.toVector.filterNot(_.isBlank)
   val tokens = input.map(formatSignal)
-  val sorted = tokens.grouped(2).toVector.map(v => v(0).isSorted(v(1)))
-  val part1  = sorted.zipWithIndex.filter(_._1).map(_._2 + 1).sum
-  println(s"Part 1: $part1") //5588
+  val part1 = tokens
+    .grouped(2)
+    .zipWithIndex
+    .collect { case (Vector(left, right), index) if left.isSorted(right) => index + 1 }
+    .toVector
+    .sum
+  println(s"Part 1: $part1")
   val divider2           = Vector("[", "[", "2", "]", "]")
   val divider6           = Vector("[", "[", "6", "]", "]")
   val tokensWithDividers = input.map(formatSignal) ++ Vector(divider2, divider6)
@@ -26,16 +30,15 @@ def formatSignal(s: String) = s
 
 extension (leftVector: Vector[String])
   def isSorted(rightVector: Vector[String]): Boolean =
-    @tailrec def loop(left: Vector[String], right: Vector[String]): Boolean =
-      (left.headOption, right.headOption) match
-        case (Some(l), Some(r)) =>
-          if l == r then loop(left.tail, right.tail)
-          else if l == "]" then true
-          else if r == "]" then false
-          else if l == "[" then loop(left.tail, right)
-          else if r == "[" then loop(left, right.tail)
-          else l.toInt <= r.toInt
-        case (Some(l), None) => false
-        case _               => true
+    @tailrec def loop(left: Vector[String], right: Vector[String]): Boolean = (left.headOption, right.headOption) match
+      case (Some(l), Some(r)) =>
+        if l == r then loop(left.tail, right.tail)
+        else if l == "]" then true
+        else if r == "]" then false
+        else if l == "[" then loop(left.tail, Vector(r, "]") ++ right)
+        else if r == "[" then loop(Vector(l, "]") ++ left, right.tail)
+        else l.toInt < r.toInt
+      case (Some(l), None) => false
+      case _               => true
 
     loop(leftVector, rightVector)
