@@ -23,11 +23,10 @@ case object Left  extends Direction(-1, 0)
 case object Right extends Direction(1, 0)
 
 case class Position(x: Int, y: Int):
-  def move(d: Direction): Position                                       = Position(x + d.x, y + d.y)
-  def heightDelta(p: Position)(using heightMap: Map[Position, Int]): Int = heightMap(p) - heightMap(this)
-  def distance(p: Position): Int                                         = (x - p.x).abs + (y - p.y).abs
+  def move(d: Direction): Position = Position(x + d.x, y + d.y)
+  def distance(p: Position): Int   = (x - p.x).abs + (y - p.y).abs
   def adjacent(using heightMap: Map[Position, Int]): Set[Position] =
-    Set(Up, Down, Left, Right).map(move).filter(p => heightMap.contains(p) && heightDelta(p) <= 1)
+    Set(Up, Down, Left, Right).map(move).filter(p => heightMap.contains(p) && heightMap(p) - heightMap(this) <= 1)
 
 case class Node(position: Position, parent: Option[Node], pathLength: Int, distance: Int):
   val fitness: Int = pathLength + distance
