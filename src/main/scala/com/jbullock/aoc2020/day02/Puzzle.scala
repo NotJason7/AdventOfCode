@@ -10,8 +10,8 @@ package com.jbullock.aoc2020.day02
   val part2 = policyPasswords.count { case (policy, password) => policy.hasValidPositions(password) }
   println(s"Part 2: $part2")
 
+extension (i: Int) def isInclusivelyBetween(x: Int, y: Int): Boolean = x <= i && i <= y
+
 case class Policy(min: Int, max: Int, character: Char):
-  def isValidCount(password: String): Boolean =
-    val characterCount = password.count(c => c == character)
-    min <= characterCount && characterCount <= max
+  def isValidCount(password: String): Boolean      = password.count(c => c == character).isInclusivelyBetween(min, max)
   def hasValidPositions(password: String): Boolean = password(min - 1) == character ^ password(max - 1) == character
