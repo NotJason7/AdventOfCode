@@ -1,21 +1,29 @@
 package com.jbullock.aoc2020.day03
 
 @main def solvePuzzle(): Unit =
-  val input           = scala.io.Source.fromResource("aoc/2020/Day03/Sample.txt").getLines.toVector
+  val input           = scala.io.Source.fromResource("aoc/2020/Day03/Input.txt").getLines.toVector
+  val treeMap = for
+    y <- input.indices
+    x <- 0 until mapWidth
+    tile = input(y)(x)
+  yield Position(x, y) -> tile
   val part1Trajectory = Trajectory(3, 1)
   val part1 = input
+    .drop(1)
     .foldLeft(State(Position.origin, 0)) { case (state: State, mapString: String) =>
       val newPosition = state.position.followTrajectory(part1Trajectory)
-      println(newPosition)
-      println(mapString)
       val currentTile = mapString(newPosition.x % mapString.length)
-      println(currentTile)
-      val hitTree = if currentTile == '#' then 1 else 0
-      println(hitTree)
+      val hitTree     = if currentTile == '#' then 1 else 0
+//      println(
+//        s"Character ${newPosition.x} (${newPosition.x % mapString.length}) of $mapString: $currentTile, so $hitTree"
+//      )
       State(newPosition, state.treesHit + hitTree)
     }
     .treesHit
   println(s"Part 1: $part1")
+  val part2Trajectories = List(
+    Trajectory(1, 1), Trajectory(3, 1), Trajectory(5, 1), Trajectory(7, 1), Trajectory(1, 2)
+  )
 
 case class Trajectory(right: Int, down: Int)
 case class Position(x: Int, y: Int):
@@ -26,13 +34,6 @@ object Position:
 case class State(position: Position, treesHit: Int)
 
 //  val mapWidth = input.head.length
-//  val treeMap = for
-//    y <- input.indices
-//    x <- 0 until mapWidth
-//    tile = input(y)(x) match
-//      case '.' => Tile.Space
-//      case '#' => Tile.Tree
-//  yield Position(x, y) -> tile
 //  val part1Trajectory = 3
 //  val part1 = input.foldLeft((Position.origin, 0)){ case ((position, treesHit), treeLine) =>
 //    val nextPosition =
