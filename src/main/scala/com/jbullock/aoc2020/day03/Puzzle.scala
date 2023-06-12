@@ -8,7 +8,7 @@ package com.jbullock.aoc2020.day03
   println(s"Part 2: $part2")
 
 case class Position(x: Int, y: Int)
-case class Trajectory(x: Int, y: Int = 1):
-  def positions(width: Int, n: Int): Seq[Position] = (0 until n).map(i => Position((i * x) % width, i * y))
+case class Trajectory(right: Int, down: Int = 1):
+  def positions(width: Int, n: Int): Seq[Position] = (0 until n).map(i => Position((i * right) % width, i * down))
   def treesHit(using map: Vector[String]): Int =
-    positions(map.head.length, map.size / y).count(p => map(p.y)(p.x) == '#')
+    positions(map.head.length, map.size / down).count(p => map(p.y)(p.x) == '#')
