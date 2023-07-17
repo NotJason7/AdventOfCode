@@ -16,7 +16,7 @@ def countBagsContaining(target: BagType)(using bags: Vector[Bag]): Int =
         targetBags.flatMap(bag => bags.filter(_.contents.map(_.bagType).contains(bag)).map(_.bagType))
       val newTargetBags     = bagsContainingTargetBags.diff(containingBags)
       val newContainingBags = containingBags ++ newTargetBags
-      loop(bagsContainingTargetBags.diff(containingBags), newContainingBags)
+      loop(newTargetBags, newContainingBags)
   loop(Set(target), Set.empty[BagType])
 
 def countBagsContainedBy(target: BagType)(using bags: Vector[Bag]): Int =
