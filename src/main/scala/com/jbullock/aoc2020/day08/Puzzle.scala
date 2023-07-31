@@ -9,7 +9,7 @@ package com.jbullock.aoc2020.day08
   val swapIndexes = instructions.zipWithIndex
     .filter { case (instruction, _) => instruction.isInstanceOf[NoOperation] || instruction.isInstanceOf[Jump] }
     .map { case (_, index) => index }
-  val possibleInstructions = swapIndexes
+  val possibleInstructions = swapIndexes.view
     .map(swapIndex => instructions.updated(swapIndex, Instruction.swap(instructions(swapIndex))))
     .map(swappedInstructions => BootState.from(swappedInstructions).followInstructions)
     .find(_.valueAtTermination.isDefined)
