@@ -21,14 +21,10 @@ enum Seating:
 enum Space:
   case Empty, Occupied, Floor
 
-case class State(seatMap: Map[Position, Space], seating: Seating, occupiedThreshold: Int):
-  private val minX: Int = seatMap.keys.map(_.x).min
-  private val maxX: Int = seatMap.keys.map(_.x).max
-  private val minY: Int = seatMap.keys.map(_.y).min
-  private val maxY: Int = seatMap.keys.map(_.y).max
+case class State(seatMap: Map[Position, Space], seating: Seating, maxOccupied: Int):
   def draw(): Unit = for
-    y <- minY to maxY
-    line = (minX to maxX)
+    y <- seatMap.keys.map(_.y).min to seatMap.keys.map(_.y).max
+    line = (seatMap.keys.map(_.x).min to seatMap.keys.map(_.x).max)
       .map(x => seatMap(Position(x, y)))
       .map {
         case Space.Empty    => 'L'
@@ -37,18 +33,19 @@ case class State(seatMap: Map[Position, Space], seating: Seating, occupiedThresh
       }
     _ = println(line.mkString(" "))
   yield ()
-  def countOccupied: Int = seatMap.count { (_, space) => space == Space.Occupied }
+
+  def countOccupied: Int = seatMap.values.count(_ == Space.Occupied)
+
   def next: State =
     val nextSeatMap: Map[Position, Space] = seatMap.keys.map { position =>
-      val relevantOccupiedSeats = position.findSeats(seatMap, seating).count(_ == Space.Occupied)
+      val occupied = position.countOccupied(seatMap, seating)
       seatMap(position) match
-        case Space.Empty =>
-          if relevantOccupiedSeats == 0 then position -> Space.Occupied else position -> Space.Empty
-        case Space.Occupied =>
-          if relevantOccupiedSeats >= occupiedThreshold then position -> Space.Empty else position -> Space.Occupied
-        case Space.Floor => position -> Space.Floor
+        case Space.Empty    => if occupied == 0 then position -> Space.Occupied else position -> Space.Empty
+        case Space.Occupied => if occupied >= maxOccupied then position -> Space.Empty else position -> Space.Occupied
+        case Space.Floor    => position -> Space.Floor
     }.toMap
-    State(nextSeatMap, seating, occupiedThreshold)
+    State(nextSeatMap, seating, maxOccupied)
+
   @tailrec final def nextUntilStable: State =
     val nextState = this.next
     if this == nextState then this else nextState.nextUntilStable
@@ -79,6 +76,6 @@ case class Position(x: Int, y: Int):
   private def visibleSeats(seatMap: Map[Position, Space]): Vector[Position] =
     Direction.all.flatMap(d => moveDirectionUntilSeat(d, seatMap))
 
-  def findSeats(seatMap: Map[Position, Space], seating: Seating): Vector[Space] = seating match
-    case Seating.Adjacent => adjacentPositions.flatMap(seatMap.get)
-    case Seating.Visible  => visibleSeats(seatMap).flatMap(seatMap.get)
+  def countOccupied(seatMap: Map[Position, Space], seating: Seating): Int = seating match
+    case Seating.Adjacent => adjacentPositions.flatMap(seatMap.get).count(_ == Space.Occupied)
+    case Seating.Visible  => visibleSeats(seatMap).flatMap(seatMap.get).count(_ == Space.Occupied)
