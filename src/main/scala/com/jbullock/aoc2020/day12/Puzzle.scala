@@ -49,8 +49,8 @@ case class Rotate(rotation: Rotation, times: Int) extends Action
 case class Forward(magnitude: Int)                extends Action
 object Action:
   def fromString(s: String): Option[Action] = s.splitAt(1) match
-    case ("N", x)         => Some(Move(0, -x.toInt))
-    case ("S", x)         => Some(Move(0, x.toInt))
+    case ("N", y)         => Some(Move(0, -y.toInt))
+    case ("S", y)         => Some(Move(0, y.toInt))
     case ("E", x)         => Some(Move(x.toInt, 0))
     case ("W", x)         => Some(Move(-x.toInt, 0))
     case ("F", magnitude) => Some(Forward(magnitude.toInt))
