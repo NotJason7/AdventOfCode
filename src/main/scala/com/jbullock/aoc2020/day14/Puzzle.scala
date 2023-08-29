@@ -34,7 +34,7 @@ object Command:
 case class Mask(value: String)                             extends Command
 case class MemoryOverride(register: BigInt, value: BigInt) extends Command
 
-extension (b: BigInt) def toNBitBinaryString(n: Int): String = ("0".repeat(n) + b.toString(2)).takeRight(36)
+extension (b: BigInt) def toNBitBinaryString(n: Int): String = ("0".repeat(n) + b.toString(2)).takeRight(n)
 
 extension (s: String)
   def mask(m: Mask): String         = m.value.zipWithIndex.map((c, index) => if c == 'X' then s(index) else c).mkString
