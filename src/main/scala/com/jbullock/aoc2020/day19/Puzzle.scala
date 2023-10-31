@@ -11,6 +11,7 @@ import scala.annotation.tailrec
   val part2RuleUpdates = Map(8 -> oneOrMore(42), 11 -> oneToNOfAThenNOfB(part2Doubles, Reference(42), Reference(31)))
   val part2Rules       = parsedRules ++ part2RuleUpdates
   val part2Regex       = RuleSet(part2Rules).toRegexString
+  println(part2Regex)
   println(s"Part 2: ${messages.count(_.matches(part2Regex))}")
 
 def oneOrMore(id: Int): Rule = Rules(Vector(Literal("("), Reference(id), Literal(")"), Literal("+")))
