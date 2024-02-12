@@ -7,13 +7,14 @@ lazy val root = project
     version      := "0.1.0",
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
-      "org.scalatest"          %% "scalatest"                % "3.2.9" % "test",
+      "org.scalatest"          %% "scalatest"                % "3.2.9"    % "test",
       "org.creativescala"      %% "doodle"                   % "0.10.1",
       "org.typelevel"          %% "cats-effect"              % "3.3.14",
       "co.fs2"                 %% "fs2-core"                 % "3.2.10",
       "co.fs2"                 %% "fs2-io"                   % "3.2.10",
       "io.circe"               %% "circe-core"               % "0.14.3",
       "io.circe"               %% "circe-parser"             % "0.14.1",
-      "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+      "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1",
+      "org.typelevel"          %% "munit-cats-effect"        % "2.0.0-M3" % "test"
     )
   )
