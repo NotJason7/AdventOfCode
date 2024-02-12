@@ -9,16 +9,14 @@ import scala.annotation.tailrec
   val mappings = createMappings(maps)
   val locationIds = mappings.foldLeft(seeds: Vector[BigInt]) {
     case (currentState: Vector[BigInt], mapping: InsaneMapping) =>
-      val nextState = currentState.map(bi => mapping.mapValueToDestination(bi))
-      nextState
+      currentState.map(bi => mapping.mapValueToDestination(bi))
   }
   val part1 = locationIds.min
   println(s"Part 1: $part1")
+
   val seedRanges: Vector[Range] =
     seeds.grouped(2).toVector.map { case Vector(start: BigInt, length: BigInt) => Range(start, start + length) }
-  val betterMappings = mappings.map(_.toSaneMapping)
-
-  val locationIdsPart2 = betterMappings.foldLeft(seedRanges) { case (ranges, mapping) =>
+  val locationIdsPart2 = mappings.map(_.toSaneMapping).foldLeft(seedRanges) { case (ranges, mapping) =>
     ranges.flatMap(_.applyMapping(mapping))
   }
   val part2 = locationIdsPart2.map(_.start).min
