@@ -88,6 +88,8 @@ case class Range(start: BigInt, end: BigInt):
   def ruleIsApplicable(rule: Rule): Boolean =
     !(rule.source.start > end || rule.source.end < start)
   private def remove(otherRange: Range): Vector[Range] =
+
+
     lazy val leftOverlap: Boolean = otherRange.start < start && otherRange.end > start && otherRange.end < end
     lazy val midOverlap: Boolean =
       otherRange.start >= start && otherRange.start <= end && otherRange.end >= start && otherRange.end <= end
@@ -102,8 +104,8 @@ case class Range(start: BigInt, end: BigInt):
       val rightRemaining = Range(otherRange.end + 1, end)
       Vector(leftRemaining, rightRemaining)
     else if rightOverlap then
-      val rightRemaining = Range(otherRange.end + 1, end)
-      Vector(rightRemaining)
+      val leftRemaining  = Range(start, otherRange.start)
+      Vector(leftRemaining)
     else if fullOverlap then Vector.empty[Range]
     else Vector(this)
 
@@ -112,6 +114,13 @@ case class Range(start: BigInt, end: BigInt):
       mapping.rules.filter(ruleIsApplicable).sortWith((r1, r2) => r1.source.start < r2.source.start)
     if sortedApplicableRules.isEmpty then Vector(this)
     else
+      // 3456789
+      //234        => 22, 23, 24 rule 1
+      //    67     => 36, 37     rule 2
+      // End up with
+      // removed 5, 9
+      // mapped range (from rule 1) 22, 23, 24
+      // mapped range (from rule 2) 36, 37
       val mappedRanges        = sortedApplicableRules.flatMap(rule => rule.applyToRange(this))
       val untouchedRuleRanges = sortedApplicableRules.map(_.source)
       val removed = untouchedRuleRanges.foldLeft(Vector(this)) { case (remainingRanges, newRemovedRange) =>
