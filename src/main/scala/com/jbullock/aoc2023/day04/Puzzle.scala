@@ -22,7 +22,7 @@ def findScore(cards: Vector[Card]): Int =
           .map(index => index -> (quantity + cardQuantities.getOrElse(index, 0)))
           .toMap
         val nextCardQuantities = cardQuantities ++ cardsWonByCurrentCard
-        loop(cardsLeft.drop(1), nextCardQuantities, nextCardsWon)
+        loop(cardsLeft.tail, nextCardQuantities, nextCardsWon)
       case None => cardsWon.values.sum
 
   val initialCardQuantities = cards.indices.map(_ -> 1).toMap
