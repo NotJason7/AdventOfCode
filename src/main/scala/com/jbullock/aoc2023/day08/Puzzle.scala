@@ -11,10 +11,10 @@ import scala.annotation.tailrec
   val end   = "ZZZ"
   val part1 = countSteps(start, end, instructions)
   println(s"Part 1: $part1")
-//  val starts = mapping.keys.filter(_.endsWith("A")).toVector
-//  val loops  = starts.map(start => findLoop(start, instructions)).map(_.loopLength).sortWith(_ > _)
-  val loops = Vector(22199, 19951, 18827, 17141, 16579, 12083).product
-  println(loops)
+  val starts = mapping.keys.filter(_.endsWith("A")).toVector
+  val loops  = starts.map(start => findLoop(start, instructions)).map(x => BigInt(x.loopLength))
+  val part2 = lowestCommonMultiple(loops)
+  println(s"Part 2: $part2")
 
 extension [A](i: Iterator[A])
   def takeUntil(predicate: A => Boolean): Vector[A] =
@@ -37,9 +37,22 @@ def countSteps(start: String, end: String, instructions: String)(using
       loop(next, stepsSoFar + 1)
   loop(start, 0)
 
-//def lowestCommonMultiple(loops: Vector[Loop2]): BigInt =
-//  val sortedLoops = loops.sortWith(_.increment > _.increment)
-//  def sync(loopA: Loop2, loopB: Loop2): Loop2 =
+def lowestCommonMultiple(x: BigInt, y: BigInt): BigInt =
+  @tailrec def sync(a: BigInt, b: BigInt): BigInt =
+    if a == b then a
+    else if a > b then sync(a, b + y)
+    else sync(a + x, b)
+  sync(x, y)
+
+def lowestCommonMultiple(values: Vector[BigInt]): BigInt =
+  val sortedValues = values.sortWith(_ >= _)
+  @tailrec def loop(leftToSync: Vector[BigInt]): BigInt =
+    if leftToSync.length == 1 then leftToSync.head
+    else
+      val Vector(a, b) = leftToSync.take(2)
+      val synced       = lowestCommonMultiple(a, b)
+      loop(synced +: leftToSync.drop(2))
+  loop(sortedValues)
 
 //def lowestCommonMultiple(loops: Vector[Loop]): BigInt =
 //  val biggestLoop               = loops.maxBy(_.loopLength)
@@ -64,9 +77,6 @@ case class Loop(startNode: String, startIndex: Int, loopLength: Int, pathToLoop:
     LazyList
       .iterate(pathsEndingInZ)((bigInts: Vector[BigInt]) => bigInts.map(bi => bi + BigInt(loopLength)))
       .iterator
-  def toLoop2: Loop2 = Loop2(pathsEndingInZ.last, loopLength)
-
-case class Loop2(first: BigInt, increment: BigInt)
 
 def findLoop(start: String, instructions: String)(using
     mapping: Map[String, (String, String)]
@@ -87,16 +97,16 @@ def findLoop(start: String, instructions: String)(using
   val startingStep = Vector((start, 0))
   loop(startingStep)
 
-def countStepsParallel(starts: Vector[String], end: String => Boolean, instructions: String)(using
-    mapping: Map[String, (String, String)]
-): Int =
-  val loopedInstructions = LazyList.continually(instructions).flatten.iterator
-  @tailrec def loop(currents: Vector[String], stepsSoFar: Int): Int =
-    if currents.exists(end) then println(s"$stepsSoFar steps: $currents")
-    if currents.forall(end) then stepsSoFar
-    else
-      val mapped          = currents.map(current => mapping.getOrElse(current, ("ZZZ", "ZZZ")))
-      val nextInstruction = loopedInstructions.take(1).toVector.head
-      val nexts           = if nextInstruction == 'L' then mapped.map(_._1) else mapped.map(_._2)
-      loop(nexts, stepsSoFar + 1)
-  loop(starts, 0)
+//def countStepsParallel(starts: Vector[String], end: String => Boolean, instructions: String)(using
+//    mapping: Map[String, (String, String)]
+//): Int =
+//  val loopedInstructions = LazyList.continually(instructions).flatten.iterator
+//  @tailrec def loop(currents: Vector[String], stepsSoFar: Int): Int =
+//    if currents.exists(end) then println(s"$stepsSoFar steps: $currents")
+//    if currents.forall(end) then stepsSoFar
+//    else
+//      val mapped          = currents.map(current => mapping.getOrElse(current, ("ZZZ", "ZZZ")))
+//      val nextInstruction = loopedInstructions.take(1).toVector.head
+//      val nexts           = if nextInstruction == 'L' then mapped.map(_._1) else mapped.map(_._2)
+//      loop(nexts, stepsSoFar + 1)
+//  loop(starts, 0)
