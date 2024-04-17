@@ -142,6 +142,6 @@ extension (tileMap: Map[Position, Tile])
   val part1 = loop.length / 2
   println(s"Part 1: $part1")
   val expandedTileMap = tileMap.replaceNonLoopPipes().expand()
-//  expandedTileMap.draw()
-  val part2 = expandedTileMap.countEnclosedTiles
-  println(s"Part 2: $part2")
+  expandedTileMap.draw()
+//  val part2 = expandedTileMap.countEnclosedTiles
+//  println(s"Part 2: $part2")
