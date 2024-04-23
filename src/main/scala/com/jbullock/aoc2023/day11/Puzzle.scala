@@ -10,12 +10,13 @@ import scala.annotation.tailrec
       x <- input.head.indices
       if input(y)(x) == '#'
     yield Position(x, y)
-  val expansionRows                   = input.expansionRows
-  val expansionColumns                = input.expansionColumns
-  val galaxyPairs: Seq[Set[Position]] = galaxies.flatMap(a => galaxies.filterNot(_ == a).map(b => Set(a, b))).distinct
-  def pairDistanceSum(i: BigInt): BigInt = galaxyPairs
+  val expansionRows    = input.expansionRows
+  val expansionColumns = input.expansionColumns
+  val galaxyPairs: Seq[Set[Position]] =
+    galaxies.flatMap(galaxy => galaxies.filterNot(_ == galaxy).map(other => Set(galaxy, other))).distinct
+  def pairDistanceSum(expansionAmount: BigInt): BigInt = galaxyPairs
     .map(_.toSeq match
-      case Seq(a, b) => a.expandedDistanceFrom(b, i, expansionRows, expansionColumns)
+      case Seq(a, b) => a.expandedDistanceFrom(b, expansionAmount, expansionRows, expansionColumns)
     )
     .sum
   println(s"Part 1: ${pairDistanceSum(2)}")
@@ -26,16 +27,9 @@ extension (strings: Seq[String])
     if s.forall(_ == '.') then Some(i) else None
   }
   def expansionColumns: Seq[BigInt] = strings.transpose.map(_.mkString).expansionRows
-  def expandEmptyRows: Seq[String] =
-    strings.flatMap(s => if s.forall(c => c == '.') then Seq(s, s) else Seq(s)).map(_.mkString)
-  def expandSpace: Seq[String] =
-    strings.expandEmptyRows.transpose.map(_.mkString).expandEmptyRows.transpose.map(_.mkString)
 
 case class Position(x: BigInt, y: BigInt):
-  def distanceFrom(p: Position): BigInt =
-    val dx = x - p.x
-    val dy = y - p.y
-    dx * dx.sign + dy * dy.sign
+  def distanceFrom(p: Position): BigInt = (x - p.x).abs + (y - p.y).abs
   def expandedDistanceFrom(
       p: Position,
       expansionAmount: BigInt,
