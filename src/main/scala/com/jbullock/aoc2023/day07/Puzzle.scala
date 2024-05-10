@@ -34,7 +34,7 @@ case class Hand(cards: Vector[Card], bid: Int):
     if maxFrequency == 5 then FiveKind
     else if maxFrequency == 4 then FourKind
     else if maxFrequency == 3 && minFrequency == 2 then FullHouse
-    else if maxFrequency == 3 && minFrequency == 1 then ThreeKind
+    else if maxFrequency == 3 then ThreeKind
     else if pairCount == 2 then TwoPair
     else if pairCount == 1 then OnePair
     else HighCard
@@ -54,8 +54,11 @@ case class Hand(cards: Vector[Card], bid: Int):
       case (HighCard, 3)  => FourKind  //AB   + JJJ
       case (HighCard, 2)  => ThreeKind //ABC  + JJ
       case (HighCard, 1)  => OnePair   //ABCD + J
-      case (_, 5)         => FiveKind  //       JJJJJ
-      case _              => jokerlessHandType
+      case (FullHouse, x) if x > 0 =>
+        println(s"Wtf, $FullHouse with $x jokers")
+        FullHouse
+      case (_, 5) => FiveKind //       JJJJJ
+      case _      => jokerlessHandType
 
   def isStrongerThan(otherHand: Hand, isJoker: Boolean = false): Boolean =
     val p1Strength = if isJoker then jokerHandType.ordinal else handType.ordinal
