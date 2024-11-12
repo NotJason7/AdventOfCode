@@ -54,9 +54,6 @@ case class Hand(cards: Vector[Card], bid: Int):
       case (HighCard, 3)  => FourKind  //AB   + JJJ
       case (HighCard, 2)  => ThreeKind //ABC  + JJ
       case (HighCard, 1)  => OnePair   //ABCD + J
-      case (FullHouse, x) if x > 0 =>
-        println(s"Wtf, $FullHouse with $x jokers")
-        FullHouse
       case (_, 5) => FiveKind //       JJJJJ
       case _      => jokerlessHandType
 
