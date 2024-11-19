@@ -7,7 +7,6 @@ import scala.annotation.tailrec
   val lines = input.map { case s"$x1,$y1 -> $x2,$y2" =>
     Line(x1.toInt, y1.toInt, x2.toInt, y2.toInt)
   }
-  val covered                      = lines.map(_.covers)
   val horiVertiCovers              = lines.filter(line => line.isHorizontal || line.isVertical).flatMap(_.covers)
   val horiVertiCoveredMoreThanOnce = horiVertiCovers.groupBy(identity).count(_._2.size >= 2)
   println(s"Part 1: $horiVertiCoveredMoreThanOnce")
@@ -19,7 +18,7 @@ case class Point(x: Int, y: Int)
 
 case class Line(x1: Int, y1: Int, x2: Int, y2: Int):
   def isHorizontal: Boolean = y1 == y2
-  def isVertical: Boolean   = x1 == x2 
+  def isVertical: Boolean   = x1 == x2
   val xs: Seq[Int] =
     if isVertical then (0 to (y2 - y1).abs).map(_ => x1)
     else if x2 > x1 then x1 to x2
