@@ -4,8 +4,9 @@ import scala.annotation.tailrec
 import scala.util.matching.Regex
 
 @main def solvePuzzle(): Unit =
-  val input              = scala.io.Source.fromResource("aoc/2024/Day03/Input.txt").getLines.toSeq.mkString
+  val input              = scala.io.Source.fromResource("aoc/2024/Day03/Sample2.txt").getLines.toSeq.mkString
   val parsedInstructions = input.findAllInstructionStrings
+  println(parsedInstructions)
   val part1 = parsedInstructions.map {
     case Mul(a, b) => a * b
     case Do        => 0
